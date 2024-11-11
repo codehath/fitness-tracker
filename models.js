@@ -1,30 +1,34 @@
 const mongoose = require('mongoose');
 
+// Body types based on gender
+const bodyTypeEnumMale = ["Slim", "Skinny Fat", "Average", "Athletic", "Muscular", "Overweight"];
+const bodyTypeEnumFemale = ["Slim", "Average", "Toned", "Curvy", "Overweight"];
+
 // User Schema
 const userSchema = new mongoose.Schema({
-  email: { type: String, required: true, unique: true },
+  email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
   name: { type: String, required: true },
-  age: { type: Number, optional: true },
-  weight: { type: Number, optional: true },
-  height: { type: Number, optional: true },
-  gender: { type: String, enum: ['Male', 'Female'], required: true },
-  bodyType: {
-    type: String,
-    required: true,
-    enum: {
-      values: function () {
-        if (this.gender === 'Male') {
-          return ['Slim', 'Skinny Fat', 'Average', 'Athletic', 'Muscular', 'Overweight'];
-        } else if (this.gender === 'Female') {
-          return ['Slim', 'Average', 'Toned', 'Curvy', 'Overweight'];
-        }
-      },
-      message: 'Invalid body type for the selected gender'
-    }
-  },
-  fitnessGoals: { type: String, optional: true },
-  createdAt: { type: Date, default: Date.now }
+  age: { type: Number },
+  weight: { type: Number },
+  height: { type: Number },
+  gender: { type: String, required: true, enum: ["Male", "Female"] },
+  bodyType: { type: String, required: true },
+  fitnessGoals: { type: String },
+  createdAt: { type: Date, default: Date.now },
+});
+
+// Pre-save hook to validate bodyType based on gender
+userSchema.pre('save', function(next) {
+  // Check if gender is male or female and validate bodyType accordingly
+  if (this.gender === 'Male' && !bodyTypeEnumMale.includes(this.bodyType)) {
+    return next(new Error(`${this.bodyType} is not a valid body type for Male`));
+  }
+  if (this.gender === 'Female' && !bodyTypeEnumFemale.includes(this.bodyType)) {
+    return next(new Error(`${this.bodyType} is not a valid body type for Female`));
+  }
+  // If validation passes, proceed with saving
+  next();
 });
 
 // Workout Plan Schema
@@ -36,7 +40,7 @@ const workoutPlanSchema = new mongoose.Schema({
       dayName: { type: String, required: true },
       exercises: [
         {
-          exerciseId: { type: mongoose.Schema.Types.ObjectId, ref: 'Exercise', required: true },
+          exerciseId: { type: String, required: true },
           sets: { type: Number, required: true },
           reps: { type: Number, required: true },
           restTime: { type: Number, optional: true }
@@ -57,7 +61,7 @@ const workoutLogSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
   completedExercises: [
     {
-      exerciseId: { type: mongoose.Schema.Types.ObjectId, ref: 'Exercise', required: true },
+      exerciseId: { type: String, required: true },
       setsCompleted: { type: Number, optional: true },
       repsCompleted: { type: Number, optional: true },
       weightUsed: { type: Number, optional: true }
