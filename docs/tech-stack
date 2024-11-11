@@ -1,0 +1,19 @@
+TypeScript
+Vite
+React Frontend
+Tailwind CSS
+NodeJS Backend
+Express
+MongoDB
+
+Authentication -  JWT or Auth0
+Redis for Cache
+Elastic Search - for search
+Stripe payments
+
+Testing Libary - Jest and Cypress
+
+
+Optional
+- Turn into Progressive Web App (PWA)
+- Use AI (GPT/Claude) to suggest goals and generate workouts 
