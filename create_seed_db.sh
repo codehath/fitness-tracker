@@ -13,7 +13,7 @@ mongosh $MONGO_URI --eval "db.getSiblingDB('$DB_NAME').dropDatabase()"
 echo "Database $DB_NAME created."
 
 # Step 3: Run the seed file
-# echo "Running the seed file..."
-# mongo $MONGO_URI/$DB_NAME $SEED_FILE
+echo "Running the seed file..."
+node seed.js
 
-# echo "Database $DB_NAME has been seeded."
+echo "Database $DB_NAME has been seeded."
