@@ -3,7 +3,7 @@ const { User, WorkoutPlan, WorkoutLog } = require('./models');
 require('dotenv').config();
 
 // Connect to MongoDB (adjust the URI if needed)
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('MongoDB connected...');
   })

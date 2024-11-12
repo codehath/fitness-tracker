@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 
+const API_URL = import.meta.env.VITE_API_URL;
+console.log("API_URL:", API_URL);
+
 function App() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/message')
+    fetch(`${API_URL}/api/message`)
       .then(response => response.json())
       .then(data => setMessage(data.message))
       .catch(error => console.error('Error fetching the message:', error));
