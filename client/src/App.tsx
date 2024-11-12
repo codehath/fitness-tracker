@@ -1,21 +1,15 @@
-import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {
   SignedIn,
   SignedOut,
   SignInButton,
   UserButton,
 } from "@clerk/clerk-react";
+import Home from "./pages/Home";
+import SignInPage from "./pages/SignIn";
+import SignUpPage from "./pages/SignUp";
 
 function App() {
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    fetch("http://localhost:5000/api/message")
-      .then((response) => response.json())
-      .then((data) => setMessage(data.message))
-      .catch((error) => console.error("Error fetching the message:", error));
-  }, []);
-
   return (
     <div className="App">
       <header>
@@ -26,8 +20,12 @@ function App() {
           <UserButton />
         </SignedIn>
       </header>
-      <h1>Message from Backend:</h1>
-      <p>{message}</p>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/sign-in/*" element={<SignInPage />} />
+        <Route path="/sign-up/*" element={<SignUpPage />} />
+      </Routes>
     </div>
   );
 }
