@@ -1,20 +1,18 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/clerk-react";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import Home from "./pages/Home";
 import SignInPage from "./pages/SignIn";
 import SignUpPage from "./pages/SignUp";
+import ProfilePage from "./pages/Profile";
 
 function App() {
+  const navigate = useNavigate();
+
   return (
     <div className="App">
       <header>
         <SignedOut>
-          <SignInButton />
+          <button onClick={() => navigate("/sign-in")}>Sign In</button>
         </SignedOut>
         <SignedIn>
           <UserButton />
@@ -25,6 +23,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/sign-in/*" element={<SignInPage />} />
         <Route path="/sign-up/*" element={<SignUpPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </div>
   );
