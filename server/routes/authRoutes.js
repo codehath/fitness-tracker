@@ -48,4 +48,27 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Add new route for updating user profile
+router.put("/users/:clerkId", async (req, res) => {
+  try {
+    const { clerkId } = req.params;
+    const updateData = req.body;
+
+    const user = await User.findOneAndUpdate(
+      { clerkId },
+      { ...updateData },
+      { new: true, runValidators: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ error: "Error updating user" });
+  }
+});
+
 module.exports = router;
