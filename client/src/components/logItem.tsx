@@ -1,42 +1,49 @@
 // Example usage in a React component
-import { useEffect } from 'react'
-import { workoutLogService } from '../services/workoutLogService'
-import { useApi } from '../hooks/useApi'
+import { useEffect, useCallback } from 'react';
+import { workoutLogService } from '../services/workoutLogService';
+import { useApi } from '../hooks/useApi';
+import Loading from './common/Loading';
+import Error from './common/Error';
 
 interface WorkoutLog {
-  _id: string
-  userId: string
-  date: string
+  _id: string;
+  userId: string;
+  date: string;
   completedExercises: Array<{
-    exerciseId: string
-    setsCompleted?: number
-    repsCompleted?: number
-    weightUsed?: number
-  }>
+    exerciseId: string;
+    setsCompleted?: number;
+    repsCompleted?: number;
+    weightUsed?: number;
+  }>;
 }
 
 interface LogProps {
-  userId: string
-  logId: string
+  userId: string;
+  logId: string;
 }
 
 const LogItem = ({ userId, logId }: LogProps) => {
+  const getLog = useCallback(
+    () => workoutLogService.getLogById(userId, logId),
+    [userId, logId]
+  );
+
   const {
     data: log,
     loading,
     error,
     execute: fetchLog,
-  } = useApi<WorkoutLog>(() => workoutLogService.getLogById(userId, logId))
+  } = useApi<WorkoutLog>(getLog);
 
   useEffect(() => {
-    fetchLog()
-  }, [userId, logId, fetchLog])
+    fetchLog();
+  }, [fetchLog]);
 
-  if (loading) return <p>Loading...</p>
-  if (error) return <p>Error: {error}</p>
-  if (!log) return <p>No workout log found</p>
+  if (loading) return <Loading />;
+  if (error) return <Error message={error} />;
+  if (!log) return <p>No workout log found</p>;
 
-  const date = new Date(log.date)
+  const date = new Date(log.date);
 
   return (
     <div>
@@ -89,7 +96,7 @@ const LogItem = ({ userId, logId }: LogProps) => {
         </a>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LogItem
+export default LogItem;
