@@ -1,22 +1,18 @@
-import { useEffect, useState } from 'react';
-
-const API_URL = import.meta.env.VITE_API_URL;
-console.log("API_URL:", API_URL);
+import { Routes, Route } from "react-router-dom";
+import AllLogs from "./pages/AllLogs";
+import Example from "./pages/Example";
+import FullLog from "./pages/FullLog"
 
 function App() {
-  const [message, setMessage] = useState('');
-
-  useEffect(() => {
-    fetch(`${API_URL}/api/message`)
-      .then(response => response.json())
-      .then(data => setMessage(data.message))
-      .catch(error => console.error('Error fetching the message:', error));
-  }, []);
-
   return (
     <div className="App">
-      <h1>Message from Backend:</h1>
-      <p>{message}</p>
+      <Routes>
+        <Route path="/" element={<div>Home Page</div>} />
+        {/* <Route path="/logs" element={<AllLogs />} /> */}
+        <Route path="/logs/:userId" element={<AllLogs />} />
+        <Route path="/logs/:userId/:logId" element={<FullLog />} />
+        <Route path="/example" element={<Example />} />
+      </Routes>
     </div>
   );
 }
