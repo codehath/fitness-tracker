@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import WorkoutLog from "../components/workoutLog";
+import LogFull from "../components/logFull";
 
 function FullLog() {
   const { userId, logId } = useParams();
@@ -10,7 +10,7 @@ function FullLog() {
 
   return (
     <div>
-      <WorkoutLog userId={finalUserId} logId={finalLogId} />
+      <LogFull userId={finalUserId} logId={finalLogId} />
     </div>
   );
 }

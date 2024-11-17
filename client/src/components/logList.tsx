@@ -1,7 +1,7 @@
 // Example usage in a React component
 import { useEffect, useState } from 'react';
 import { workoutLogService } from '../services/workoutLogService';
-import SingleLog from './singleLog'
+import LogItem from './logItem'
 
 interface WorkoutLog {
   _id: string;
@@ -19,7 +19,7 @@ interface UserProp {
   userId: string;
 }
 
-const LogsList = ({ userId }: UserProp) => {
+const LogList = ({ userId }: UserProp) => {
   const [logs, setLogs] = useState<WorkoutLog[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
@@ -49,7 +49,7 @@ const LogsList = ({ userId }: UserProp) => {
       <div className="logs-list">
         {logs.map((log) => {
           return (
-            <SingleLog userId={userId} logId={log._id}/>
+            <LogItem userId={userId} logId={log._id}/>
           );
         })}
       </div>
@@ -57,4 +57,4 @@ const LogsList = ({ userId }: UserProp) => {
   );
 };
 
-export default LogsList;
+export default LogList;

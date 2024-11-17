@@ -19,7 +19,7 @@ interface LogProps {
   logId: string;
 }
 
-const Log = ({ userId, logId }: LogProps) => {
+const LogFull = ({ userId, logId }: LogProps) => {
   const [log, setLog] = useState<WorkoutLog | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
@@ -82,4 +82,4 @@ const Log = ({ userId, logId }: LogProps) => {
   );
 };
 
-export default Log;
+export default LogFull;

@@ -14,12 +14,12 @@ interface WorkoutLog {
   }>;
 }
 
-interface UserProp {
+interface LogProps {
   userId: string;
   logId: string;
 }
 
-const SingleLog = ({ userId, logId }: UserProp) => {
+const LogItem = ({ userId, logId }: LogProps) => {
   const [log, setLog] = useState<WorkoutLog | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
@@ -94,4 +94,4 @@ const SingleLog = ({ userId, logId }: UserProp) => {
   );
 };
 
-export default SingleLog;
+export default LogItem;

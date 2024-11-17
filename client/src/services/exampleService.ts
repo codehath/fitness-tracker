@@ -1,4 +1,4 @@
-import api from 'axios.config';
+import api from './axios.config';
 
 export const userService = {
     getUsers: async (params) => {
