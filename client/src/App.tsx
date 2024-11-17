@@ -1,14 +1,15 @@
-import { Routes, Route } from "react-router-dom";
-import AllLogs from "./pages/AllLogs";
-import Example from "./pages/Example";
-import FullLog from "./pages/FullLog";
-import NewLogPage from "./pages/NewLogPage";
+import { Routes, Route } from 'react-router-dom'
+import Home from './pages/Home'
+import AllLogs from './pages/AllLogs'
+import Example from './pages/Example'
+import FullLog from './pages/FullLog'
+import NewLogPage from './pages/NewLogPage'
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<div>Home Page</div>} />
+        <Route path="/" element={<Home />} />
         {/* <Route path="/logs" element={<AllLogs />} /> */}
         <Route path="/logs/:userId" element={<AllLogs />} />
         <Route path="/logs/:userId/:logId" element={<FullLog />} />
@@ -16,7 +17,7 @@ function App() {
         <Route path="/example" element={<Example />} />
       </Routes>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
