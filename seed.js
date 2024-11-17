@@ -2,8 +2,10 @@ const mongoose = require('mongoose');
 const { User, WorkoutPlan, WorkoutLog } = require('./models');
 require('dotenv').config();
 
+const MONGODB_URL= process.env.MONGODB_URL ||"mongodb://localhost:27017/fitness-app"
+
 // Connect to MongoDB (adjust the URI if needed)
-mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGODB_URL)
   .then(() => {
     console.log('MongoDB connected...');
   })
@@ -96,6 +98,7 @@ const seedData = async () => {
         workoutPlanId: workoutPlan1._id,
         day: 'Monday',
       },
+      date: new Date('2024-01-15'),
       completedExercises: [
         { exerciseId: 'exercise_id_1', setsCompleted: 3, repsCompleted: 10, weightUsed: 50 },
         { exerciseId: 'exercise_id_2', setsCompleted: 4, repsCompleted: 8, weightUsed: 60 },
@@ -108,14 +111,57 @@ const seedData = async () => {
         workoutPlanId: workoutPlan2._id,
         day: 'Tuesday',
       },
+      date: new Date('2024-01-16'),
       completedExercises: [
         { exerciseId: 'exercise_id_5', setsCompleted: 3, repsCompleted: 15, weightUsed: 30 },
         { exerciseId: 'exercise_id_6', setsCompleted: 4, repsCompleted: 12, weightUsed: 40 },
       ],
     });
 
+    const workoutLog3 = new WorkoutLog({
+      userId: user1._id,
+      workout: {
+        workoutPlanId: workoutPlan1._id,
+        day: 'Wednesday',
+      },
+      date: new Date('2024-01-17'),
+      completedExercises: [
+        { exerciseId: 'exercise_id_3', setsCompleted: 3, repsCompleted: 10, weightUsed: 45 },
+        { exerciseId: 'exercise_id_4', setsCompleted: 4, repsCompleted: 8, weightUsed: 55 },
+      ],
+    });
+
+    const workoutLog4 = new WorkoutLog({
+      userId: user2._id,
+      workout: {
+        workoutPlanId: workoutPlan2._id,
+        day: 'Thursday',
+      },
+      date: new Date('2024-01-18'),
+      completedExercises: [
+        { exerciseId: 'exercise_id_7', setsCompleted: 3, repsCompleted: 15, weightUsed: 35 },
+        { exerciseId: 'exercise_id_8', setsCompleted: 4, repsCompleted: 12, weightUsed: 45 },
+      ],
+    });
+
+    const workoutLog5 = new WorkoutLog({
+      userId: user1._id,
+      workout: {
+        workoutPlanId: workoutPlan1._id,
+        day: 'Monday',
+      },
+      date: new Date('2024-01-22'),
+      completedExercises: [
+        { exerciseId: 'exercise_id_1', setsCompleted: 3, repsCompleted: 10, weightUsed: 52.5 },
+        { exerciseId: 'exercise_id_2', setsCompleted: 4, repsCompleted: 8, weightUsed: 62.5 },
+      ],
+    });
+
     await workoutLog1.save();
     await workoutLog2.save();
+    await workoutLog3.save();
+    await workoutLog4.save();
+    await workoutLog5.save();
     console.log('Workout logs created...');
 
     // Close MongoDB connection
