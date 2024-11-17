@@ -1,38 +1,41 @@
-import api from './axios.config';
+import api from './axios.config'
+
+// Helper function to handle API calls with error handling
+const apiHandler = async <T>(operation: () => Promise<T>): Promise<T> => {
+  try {
+    return await operation()
+  } catch (error) {
+    console.error('API Error:', error)
+    throw error
+  }
+}
 
 export const workoutLogService = {
-    getLogs: async (userId: string) => {
-        try {
-            const response = await api.get(`/logs/${userId}`);
-            return response.data;
-        } catch (error) {
-            console.error('Error fetching logs:', error);
-            throw error;
-        }
-    },
+  getLogs: (userId: string) =>
+    apiHandler(() => api.get(`/logs/${userId}`).then((res) => res.data)),
 
-    getLogById: async (userId: string, logId: string) => {
-        const response = await api.get(`/logs/${userId}/${logId}`);
-        return response.data;
-    },
+  getLogById: (userId: string, logId: string) =>
+    apiHandler(() =>
+      api.get(`/logs/${userId}/${logId}`).then((res) => res.data)
+    ),
 
-    createLog: async (userId: string, logData: any) => {
-        const response = await api.post(`/logs/${userId}`, logData);
-        return response.data;
-    },
+  createLog: (userId: string, logData: any) =>
+    apiHandler(() =>
+      api.post(`/logs/${userId}`, logData).then((res) => res.data)
+    ),
 
-    updateLog: async (userId: string, id: string, logData: any) => {
-        const response = await api.put(`/logs/${userId}/${id}`, logData);
-        return response.data;
-    },
+  updateLog: (userId: string, id: string, logData: any) =>
+    apiHandler(() =>
+      api.put(`/logs/${userId}/${id}`, logData).then((res) => res.data)
+    ),
 
-    deleteLog: async (userId: string, id: string) => {
-        const response = await api.delete(`/logs/${userId}/${id}`);
-        return response.data;
-    },
+  deleteLog: (userId: string, id: string) =>
+    apiHandler(() =>
+      api.delete(`/logs/${userId}/${id}`).then((res) => res.data)
+    ),
 
-    searchLogs: async (query: string) => {
-        const response = await api.get('/search', { params: { query } });
-        return response.data;
-    },
-};
+  searchLogs: (query: string) =>
+    apiHandler(() =>
+      api.get('/search', { params: { query } }).then((res) => res.data)
+    ),
+}
