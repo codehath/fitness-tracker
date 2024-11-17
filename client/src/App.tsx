@@ -1,9 +1,9 @@
-import { Routes, Route } from 'react-router-dom'
-import Home from './pages/Home'
-import AllLogs from './pages/AllLogs'
-import Example from './pages/Example'
-import FullLog from './pages/FullLog'
-import NewLogPage from './pages/NewLogPage'
+import { Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import AllLogs from './pages/AllLogs';
+import Example from './pages/Example';
+import FullLog from './pages/FullLog';
+import NewLogPage from './pages/NewLogPage';
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
         <Route path="/example" element={<Example />} />
       </Routes>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
