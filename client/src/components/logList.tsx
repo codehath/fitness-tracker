@@ -5,18 +5,7 @@ import LogItem from './logItem';
 import { useApi } from '../hooks/useApi';
 import Loading from './common/Loading';
 import Error from './common/Error';
-
-interface WorkoutLog {
-  _id: string;
-  userId: string;
-  date: string;
-  completedExercises: Array<{
-    exerciseId: string;
-    setsCompleted?: number;
-    repsCompleted?: number;
-    weightUsed?: number;
-  }>;
-}
+import { WorkoutLog } from '../services/workoutLogService';
 
 interface UserProp {
   userId: string;

@@ -1,14 +1,17 @@
 import api from './axios.config';
+import { apiHandler } from './apiHandler';
 
-// Helper function to handle API calls with error handling
-const apiHandler = async <T>(operation: () => Promise<T>): Promise<T> => {
-  try {
-    return await operation();
-  } catch (error) {
-    console.error('API Error:', error);
-    throw error;
-  }
-};
+export interface WorkoutLog {
+  _id: string;
+  userId: string;
+  date: string;
+  completedExercises: Array<{
+    exerciseId: string;
+    setsCompleted?: number;
+    repsCompleted?: number;
+    weightUsed?: number;
+  }>;
+}
 
 export const workoutLogService = {
   getLogs: (userId: string) =>
