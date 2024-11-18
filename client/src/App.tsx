@@ -5,9 +5,12 @@ import Example from './pages/Example';
 import FullLog from './pages/FullLog';
 import NewLogPage from './pages/NewLogPage';
 import Account from './pages/Account';
+import NavBar from './components/NavBar';
+
 function App() {
   return (
     <div className="App">
+      <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/logs/:userId" element={<AllLogs />} />
