@@ -105,4 +105,26 @@ npm run dev
 
 The app should now be running and accessible locally.
 
+### 7. Setting Up Ngrok (for Development)
+
+To test webhooks locally, you'll need to use ngrok. This step is only necessary if you're working with webhooks in development:
+
+1. Install ngrok:
+
+```bash
+npm install -g ngrok
+```
+
+2. In a new terminal, create a secure tunnel to your backend:
+
+```bash
+ngrok http 3000
+```
+
+3. Copy the HTTPS URL provided by ngrok (e.g., https://1234-your-url.ngrok.io)
+
+4. Use this URL in your webhook configuration settings
+
+Note: The ngrok URL changes each time you restart ngrok, so you'll need to update your webhook settings with the new URL when this happens.
+
 ---
