@@ -4,17 +4,17 @@ import AllLogs from './pages/AllLogs';
 import Example from './pages/Example';
 import FullLog from './pages/FullLog';
 import NewLogPage from './pages/NewLogPage';
-
+import Account from './pages/Account';
 function App() {
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* <Route path="/logs" element={<AllLogs />} /> */}
         <Route path="/logs/:userId" element={<AllLogs />} />
         <Route path="/logs/:userId/:logId" element={<FullLog />} />
         <Route path="/logs/new" element={<NewLogPage />} />
         <Route path="/example" element={<Example />} />
+        <Route path="/account/:userId" element={<Account />} />
       </Routes>
     </div>
   );
