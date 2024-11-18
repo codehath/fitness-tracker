@@ -9,12 +9,36 @@ git clone https://github.com/codehath/fitness-tracker.git
 cd fitness-tracker
 ```
 
-### 2. Rename `.env.example`
+### 2. Set Up Environment Variables
 
-Copy the `.env.example` file to `.env` to set up environment variables.
+You'll need to set up environment variables for both the root directory and the client directory.
+
+#### **Root Directory**
+
+Copy the root `.env.example` file:
 
 ```bash
 cp .env.example .env
+```
+
+#### **Client Directory**
+
+Navigate to the client directory and copy its `.env.example` file:
+
+```bash
+cd client
+cp .env.example .env
+```
+
+You'll need to:
+
+1. Get your Clerk publishable key from the Clerk dashboard
+2. Add it to client/.env as VITE_CLERK_PUBLISHABLE_KEY
+
+Then return to the root directory:
+
+```bash
+cd ..
 ```
 
 ### 3. Install Dependencies
