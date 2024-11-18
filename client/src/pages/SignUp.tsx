@@ -4,7 +4,7 @@ function SignUpPage() {
   return (
     <div>
       <h1>Sign Up</h1>
-      <SignUp />
+      <SignUp fallbackRedirectUrl="/onboarding" signInFallbackRedirectUrl="/" />
     </div>
   );
 }

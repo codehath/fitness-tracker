@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useUser } from "@clerk/clerk-react";
+import { useUser, useClerk } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 
 interface ProfileFormData {
   age: string;
@@ -12,6 +13,8 @@ interface ProfileFormData {
 
 function ProfilePage() {
   const { user } = useUser();
+  const { signOut } = useClerk();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<ProfileFormData>({
     age: "",
     weight: "",
@@ -20,6 +23,11 @@ function ProfilePage() {
     bodyType: "",
     fitnessGoals: "",
   });
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/");
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -140,6 +148,7 @@ function ProfilePage() {
 
         <button type="submit">Update Profile</button>
       </form>
+      <button onClick={handleSignOut}>Sign Out</button>
     </div>
   );
 }

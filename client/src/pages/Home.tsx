@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 function Home() {
   const [message, setMessage] = useState("");
@@ -12,8 +13,11 @@ function Home() {
 
   return (
     <div>
-      <h1>Message from Backend:</h1>
+      <h1>Home</h1>
       <p>{message}</p>
+      <Link to="/profile">
+        <button>Go to Profile</button>
+      </Link>
     </div>
   );
 }
