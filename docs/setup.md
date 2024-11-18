@@ -30,10 +30,16 @@ cd client
 cp .env.example .env
 ```
 
-You'll need to:
+### 3. Set Up Clerk Authentication
 
-1. Get your Clerk publishable key from the Clerk dashboard
-2. Add it to client/.env as VITE_CLERK_PUBLISHABLE_KEY
+1. Create a Clerk account at [clerk.dev](https://clerk.dev)
+2. Create a new application in your Clerk dashboard
+3. Get your Publishable Key from the Clerk dashboard
+4. Add it to your client/.env file:
+
+```bash
+VITE_CLERK_PUBLISHABLE_KEY=pk_test_your_key_here
+```
 
 Then return to the root directory:
 
@@ -41,7 +47,7 @@ Then return to the root directory:
 cd ..
 ```
 
-### 3. Install Dependencies
+### 4. Install Dependencies
 
 Install the required dependencies for both the root and the client directories.
 
@@ -53,39 +59,74 @@ npm install
 
 #### **Client Directory (Frontend)**
 
-Navigate to the client folder and install the dependencies:
-
 ```bash
 cd client
 npm install
 cd ..
 ```
 
-### 4. Activate Shell Script
+### 5. Set Up and Seed the Database
 
-Ensure that the shell script has execute permission. You can grant execute permissions using the following command:
+First, ensure the shell script has execute permission:
 
 ```bash
 chmod +x create_seed_db.sh
 ```
 
-### 5. Set Up and Seed the Database
-
-Run the shell script to create and seed the MongoDB database. This script will delete the existing database (if any), create a new one, and populate it with initial data.
+Then run the script to create and seed the MongoDB database:
 
 ```bash
 sh create_seed_db.sh
 ```
 
-### 6. Running the Application
+### 6. Set Up Ngrok and Webhooks
 
-Once the database is set up, you can start the application:
+This step is essential for development as it allows Clerk's webhooks to reach your local server:
+
+1. Install ngrok:
+
+```bash
+npm install -g ngrok
+```
+
+2. Authenticate ngrok (one-time setup):
+
+   - Sign up at [ngrok.com](https://ngrok.com)
+   - Get your authtoken from the ngrok dashboard
+   - Run: `ngrok config add-authtoken your_token_here`
+
+3. Start ngrok in a new terminal:
+
+```bash
+ngrok http 3000
+```
+
+4. Configure Webhooks in Clerk:
+   - Go to your Clerk Dashboard
+   - Navigate to Webhooks in the sidebar
+   - Click "Add Endpoint"
+   - Use your ngrok URL + `/api/v1/webhooks/clerk`
+     Example: `https://your-ngrok-url.ngrok.io/api/v1/webhooks/clerk`
+   - Select these events:
+     - user.created
+     - user.deleted
+     - user.updated
+
+**Important Notes:**
+
+- The ngrok URL changes each time you restart ngrok
+- You'll need to update the webhook URL in your Clerk dashboard whenever you restart ngrok
+- Each developer needs their own Clerk account and ngrok setup
+
+### 7. Running the Application
+
+Start the full application:
 
 ```bash
 npm run start
 ```
 
-Alternatively you can start the backend and frontend separately:
+Or run backend and frontend separately:
 
 #### **Backend (Server)**
 
@@ -96,35 +137,11 @@ node index.js
 
 #### **Frontend (Client)**
 
-Navigate to the client folder and run the development server:
-
 ```bash
 cd client
 npm run dev
 ```
 
 The app should now be running and accessible locally.
-
-### 7. Setting Up Ngrok (for Development)
-
-To test webhooks locally, you'll need to use ngrok. This step is only necessary if you're working with webhooks in development:
-
-1. Install ngrok:
-
-```bash
-npm install -g ngrok
-```
-
-2. In a new terminal, create a secure tunnel to your backend:
-
-```bash
-ngrok http 3000
-```
-
-3. Copy the HTTPS URL provided by ngrok (e.g., https://1234-your-url.ngrok.io)
-
-4. Use this URL in your webhook configuration settings
-
-Note: The ngrok URL changes each time you restart ngrok, so you'll need to update your webhook settings with the new URL when this happens.
 
 ---
