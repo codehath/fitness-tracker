@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useUser } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
+import { userService } from '../services/userService';
 
 interface FormData {
   age: string;
@@ -13,6 +14,8 @@ interface FormData {
 
 function OnboardingForm() {
   const { user } = useUser();
+  const clerkId = user?.id;
+
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<FormData>({
@@ -40,21 +43,17 @@ function OnboardingForm() {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/users/${user?.id}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-        }
+      const processedFormData = {
+        ...formData,
+        age: parseInt(formData.age),
+        weight: parseInt(formData.weight),
+        height: parseInt(formData.height),
+      };
+
+      const response = await userService.updateUser(
+        clerkId!,
+        processedFormData
       );
-
-      if (!response.ok) {
-        throw new Error('Failed to update profile');
-      }
-
       navigate('/');
     } catch (error) {
       console.error('Error updating profile:', error);
