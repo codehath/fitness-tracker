@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
-import LogFull from '../components/logNew';
+import LogFull from '../components/logFull';
 
-function NewLogPage() {
+function WorkoutLogPage() {
   const { userId, logId } = useParams();
   const testUserId = '67387608e70d4a5c4f187b57';
   const testLogID = '67387609e70d4a5c4f187b6c';
@@ -15,4 +15,4 @@ function NewLogPage() {
   );
 }
 
-export default NewLogPage;
+export default WorkoutLogPage;

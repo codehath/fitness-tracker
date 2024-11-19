@@ -1,25 +1,25 @@
 import { SignedIn, SignedOut } from '@clerk/clerk-react';
 import { Navigate, Routes, Route } from 'react-router-dom';
-import Home from '../pages/Home';
-import ProfilePage from '../pages/Profile';
-import OnboardingPage from '../pages/Onboarding';
-import AllLogs from '../pages/AllLogs';
-import FullLog from '../pages/FullLog';
+import HomePage from '../pages/HomePage';
+import EditAccountPage from '../pages/EditAccountPage';
+import OnboardingPage from '../pages/OnboardingPage';
+import WorkoutHistoryPage from '../pages/WorkoutHistoryPage';
+import WorkoutLogPage from '../pages/WorkoutLogPage';
 import NewLogPage from '../pages/NewLogPage';
-import Account from '../pages/Account';
+import AccountPage from '../pages/AccountPage';
 
 export default function ProtectedRoutes() {
   return (
     <>
       <SignedIn>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/profile" element={<EditAccountPage />} />
           <Route path="/onboarding" element={<OnboardingPage />} />
-          <Route path="/logs/:userId" element={<AllLogs />} />
-          <Route path="/logs/:userId/:logId" element={<FullLog />} />
+          <Route path="/logs/:userId" element={<WorkoutHistoryPage />} />
+          <Route path="/logs/:userId/:logId" element={<WorkoutLogPage />} />
           <Route path="/logs/new" element={<NewLogPage />} />
-          <Route path="/account/:userId" element={<Account />} />
+          <Route path="/account/:userId" element={<AccountPage />} />
         </Routes>
       </SignedIn>
       <SignedOut>

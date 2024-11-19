@@ -11,7 +11,7 @@ interface ProfileFormData {
   fitnessGoals: string;
 }
 
-function ProfilePage() {
+function EditAccountPage() {
   const { user } = useUser();
   const { signOut } = useClerk();
   const navigate = useNavigate();
@@ -153,4 +153,4 @@ function ProfilePage() {
   );
 }
 
-export default ProfilePage;
+export default EditAccountPage;

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useUser } from '@clerk/clerk-react';
 
-function Home() {
+function HomePage() {
   const [message, setMessage] = useState('');
   const { user } = useUser();
 
@@ -28,4 +28,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;

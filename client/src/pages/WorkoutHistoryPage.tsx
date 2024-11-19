@@ -1,7 +1,8 @@
 import { useUser } from '@clerk/clerk-react';
 import LogList from '../components/logList';
 import Error from '../components/common/Error';
-function AllLogs() {
+
+function WorkoutHistoryPage() {
   const { user } = useUser();
   const clerkId = user?.id;
 
@@ -14,4 +15,4 @@ function AllLogs() {
   );
 }
 
-export default AllLogs;
+export default WorkoutHistoryPage;
