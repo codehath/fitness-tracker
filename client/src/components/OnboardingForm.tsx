@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { useUser } from "@clerk/clerk-react";
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { useUser } from '@clerk/clerk-react';
+import { useNavigate } from 'react-router-dom';
 
 interface FormData {
   age: string;
@@ -16,12 +16,12 @@ function OnboardingForm() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<FormData>({
-    age: "",
-    weight: "",
-    height: "",
-    gender: "",
-    bodyType: "",
-    fitnessGoals: "",
+    age: '',
+    weight: '',
+    height: '',
+    gender: '',
+    bodyType: '',
+    fitnessGoals: '',
   });
 
   const handleNext = () => {
@@ -41,23 +41,23 @@ function OnboardingForm() {
   const handleSubmit = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/v1/webhooks/clerk/users/${user?.id}`,
+        `${import.meta.env.VITE_API_URL}/v1/webhooks/clerk/users/${user?.id}`,
         {
-          method: "PUT",
+          method: 'PUT',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(formData),
         }
       );
 
       if (!response.ok) {
-        throw new Error("Failed to update profile");
+        throw new Error('Failed to update profile');
       }
 
-      navigate("/");
+      navigate('/');
     } catch (error) {
-      console.error("Error updating profile:", error);
+      console.error('Error updating profile:', error);
     }
   };
 
@@ -121,12 +121,12 @@ function OnboardingForm() {
             <h3>What's your gender?</h3>
             <div>
               <button
-                onClick={() => setFormData({ ...formData, gender: "Male" })}
+                onClick={() => setFormData({ ...formData, gender: 'Male' })}
               >
                 Male
               </button>
               <button
-                onClick={() => setFormData({ ...formData, gender: "Female" })}
+                onClick={() => setFormData({ ...formData, gender: 'Female' })}
               >
                 Female
               </button>
@@ -139,15 +139,15 @@ function OnboardingForm() {
             <h2>Question {step} of 6</h2>
             <h3>What's your body type?</h3>
             <div>
-              {formData.gender === "Male" ? (
+              {formData.gender === 'Male' ? (
                 <>
                   {[
-                    "Slim",
-                    "Skinny Fat",
-                    "Average",
-                    "Athletic",
-                    "Muscular",
-                    "Overweight",
+                    'Slim',
+                    'Skinny Fat',
+                    'Average',
+                    'Athletic',
+                    'Muscular',
+                    'Overweight',
                   ].map((type) => (
                     <button
                       key={type}
@@ -161,7 +161,7 @@ function OnboardingForm() {
                 </>
               ) : (
                 <>
-                  {["Slim", "Average", "Toned", "Curvy", "Overweight"].map(
+                  {['Slim', 'Average', 'Toned', 'Curvy', 'Overweight'].map(
                     (type) => (
                       <button
                         key={type}
@@ -225,7 +225,7 @@ function OnboardingForm() {
           Back
         </button>
         <button onClick={handleNext} disabled={isNextDisabled()}>
-          {step === 6 ? "Finish" : "Next"}
+          {step === 6 ? 'Finish' : 'Next'}
         </button>
       </div>
     </div>

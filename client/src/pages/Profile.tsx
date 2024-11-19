@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { useUser, useClerk } from "@clerk/clerk-react";
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { useUser, useClerk } from '@clerk/clerk-react';
+import { useNavigate } from 'react-router-dom';
 
 interface ProfileFormData {
   age: string;
@@ -16,17 +16,17 @@ function ProfilePage() {
   const { signOut } = useClerk();
   const navigate = useNavigate();
   const [formData, setFormData] = useState<ProfileFormData>({
-    age: "",
-    weight: "",
-    height: "",
-    gender: "",
-    bodyType: "",
-    fitnessGoals: "",
+    age: '',
+    weight: '',
+    height: '',
+    gender: '',
+    bodyType: '',
+    fitnessGoals: '',
   });
 
   const handleSignOut = async () => {
     await signOut();
-    navigate("/");
+    navigate('/');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -34,24 +34,24 @@ function ProfilePage() {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/v1/webhooks/clerk/users/${user?.id}`,
+        `${import.meta.env.VITE_API_URL}/v1/webhooks/clerk/users/${user?.id}`,
         {
-          method: "PUT",
+          method: 'PUT',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(formData),
         }
       );
 
       if (!response.ok) {
-        throw new Error("Failed to update profile");
+        throw new Error('Failed to update profile');
       }
 
-      alert("Profile updated successfully!");
+      alert('Profile updated successfully!');
     } catch (error) {
-      console.error("Error updating profile:", error);
-      alert("Failed to update profile");
+      console.error('Error updating profile:', error);
+      alert('Failed to update profile');
     }
   };
 
@@ -115,7 +115,7 @@ function ProfilePage() {
             onChange={handleChange}
           >
             <option value="">Select Body Type</option>
-            {formData.gender === "Male" ? (
+            {formData.gender === 'Male' ? (
               <>
                 <option value="Slim">Slim</option>
                 <option value="Skinny Fat">Skinny Fat</option>

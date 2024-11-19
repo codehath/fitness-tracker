@@ -20,40 +20,6 @@ router.get('/exercises/cache-contents', (req, res) => {
   res.json(cacheContents);
 });
 
-// router.get('/exercises', async (req, res) => {
-//   try {
-//     // Check cache first
-//     const cachedData = cache.get('exercises');
-//     if (cachedData) {
-//       return res.json(cachedData);
-//     }
-
-//     // Make API call if not cached
-//     const response = await axios.get('https://exercise-api.com/exercises', {
-//       headers: {
-//         Authorization: `Bearer ${process.env.EXERCISE_API_KEY}`,
-//       },
-//     });
-
-//     // Transform data if needed
-//     const transformedData = response.data.map((exercise) => ({
-//       id: exercise.id,
-//       name: exercise.name,
-//       type: exercise.type,
-//       muscle: exercise.muscle,
-//       // Add only the fields you need
-//     }));
-
-//     // Store in cache
-//     cache.set('exercises', transformedData);
-
-//     res.json(transformedData);
-//   } catch (error) {
-//     console.error('Exercise API Error:', error);
-//     res.status(500).json({ error: 'Failed to fetch exercises' });
-//   }
-// });
-
 // Helper function for making API requests with caching
 const makeExerciseApiRequest = async (endpoint = '', params = {}) => {
   // Create a unique cache key based on endpoint and params
