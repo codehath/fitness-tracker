@@ -5,6 +5,7 @@ import { useApi } from '../hooks/useApi';
 import Loading from './common/Loading';
 import Error from './common/Error';
 import { WorkoutLog } from '../services/workoutLogService';
+import ExerciseName from './exerciseName';
 
 interface LogProps {
   userId: string;
@@ -69,7 +70,7 @@ const LogItem = ({ userId, logId }: LogProps) => {
                 {log.completedExercises.map((exercise, index) => (
                   <tr key={index}>
                     <td style={{ textAlign: 'center' }}>
-                      {exercise.exerciseId}
+                      <ExerciseName exerciseId={exercise.exerciseId} />
                     </td>
                     <td style={{ textAlign: 'center' }}>
                       {exercise.setsCompleted || '-'}
