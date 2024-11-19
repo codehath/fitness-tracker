@@ -6,11 +6,11 @@ import Error from './common/Error';
 import { User } from '../services/userService';
 
 interface UserProp {
-  userId: string;
+  clerkId: string;
 }
 
-const UserDataEdit = ({ userId }: UserProp) => {
-  const getuser = useCallback(() => userService.getUser(userId), [userId]);
+const UserDataEdit = ({ clerkId }: UserProp) => {
+  const getuser = useCallback(() => userService.getUser(clerkId), [clerkId]);
   const { data: user, loading, error } = useApi<User>(getuser);
 
   const [formData, setFormData] = useState({
@@ -54,7 +54,7 @@ const UserDataEdit = ({ userId }: UserProp) => {
       );
 
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/users/${userId}`,
+        `${import.meta.env.VITE_API_URL}/users/${clerkId}`,
         {
           method: 'PUT',
           headers: {

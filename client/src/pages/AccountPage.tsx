@@ -1,13 +1,12 @@
-import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import UserData from '../components/userData';
 import { useUser, useClerk } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
 
 function AccountPage() {
-  const { userId } = useParams();
-
   const { user } = useUser();
+  const clerkId = user?.id;
+
   const { signOut } = useClerk();
   const navigate = useNavigate();
 
@@ -18,7 +17,7 @@ function AccountPage() {
 
   return (
     <div>
-      <UserData userId={user?.id} />
+      <UserData clerkId={clerkId} />
       <Link to="/profile">
         <button>Edit Profile</button>
       </Link>

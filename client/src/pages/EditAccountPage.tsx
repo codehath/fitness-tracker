@@ -3,10 +3,11 @@ import UserDataEdit from '../components/userDataEdit';
 
 function EditAccountPage() {
   const { user } = useUser();
+  const clerkId = user?.id;
 
   return (
     <div>
-      <UserDataEdit userId={user?.id} />
+      <UserDataEdit clerkId={clerkId} />
     </div>
   );
 }

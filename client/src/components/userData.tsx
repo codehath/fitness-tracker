@@ -6,11 +6,11 @@ import Error from './common/Error';
 import { User } from '../services/userService';
 
 interface UserProp {
-  userId: string;
+  clerkId: string;
 }
 
-const UserData = ({ userId }: UserProp) => {
-  const getuser = useCallback(() => userService.getUser(userId), [userId]);
+const UserData = ({ clerkId }: UserProp) => {
+  const getuser = useCallback(() => userService.getUser(clerkId), [clerkId]);
   const { data: user, loading, error } = useApi<User>(getuser);
 
   if (loading) return <Loading />;
