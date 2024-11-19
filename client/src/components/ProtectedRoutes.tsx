@@ -16,10 +16,10 @@ export default function ProtectedRoutes() {
           <Route path="/" element={<HomePage />} />
           <Route path="/profile" element={<EditAccountPage />} />
           <Route path="/onboarding" element={<OnboardingPage />} />
-          <Route path="/logs/:userId" element={<WorkoutHistoryPage />} />
-          <Route path="/logs/:userId/:logId" element={<WorkoutLogPage />} />
+          <Route path="/logs" element={<WorkoutHistoryPage />} />
+          <Route path="/logs/:logId" element={<WorkoutLogPage />} />
           <Route path="/logs/new" element={<NewLogPage />} />
-          <Route path="/account/:userId" element={<AccountPage />} />
+          <Route path="/account" element={<AccountPage />} />
         </Routes>
       </SignedIn>
       <SignedOut>
