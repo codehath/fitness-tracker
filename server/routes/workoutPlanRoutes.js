@@ -15,13 +15,13 @@ router.get('/plans', async (req, res) => {
 });
 
 // Get workout plans created by user
-router.get('/plans/:userId', async (req, res) => {
+router.get('/plans/user/:userId', async (req, res) => {
   try {
     const userId = new mongoose.Types.ObjectId(req.params.userId);
     const plans = await WorkoutPlan.find({ userId });
     res.status(200).json(plans);
   } catch (error) {
-    console.error('Error in GET /plans/:userId:', error);
+    console.error('Error in GET /plans/user/:userId:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });

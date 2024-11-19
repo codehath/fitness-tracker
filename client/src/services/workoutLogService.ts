@@ -4,6 +4,10 @@ import { apiHandler } from './apiHandler';
 export interface WorkoutLog {
   _id: string;
   userId: string;
+  workout: {
+    workoutPlanId: string;
+    day: string;
+  };
   date: string;
   completedExercises: Array<{
     exerciseId: string;
@@ -11,6 +15,8 @@ export interface WorkoutLog {
     repsCompleted?: number;
     weightUsed?: number;
   }>;
+  planId: string;
+  dayIndex: number;
 }
 
 export const workoutLogService = {

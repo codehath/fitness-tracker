@@ -25,7 +25,7 @@ export const workoutPlanService = {
   getPlans: () => apiHandler(() => api.get(`/plans`).then((res) => res.data)),
 
   getUserPlans: (userId: string) =>
-    apiHandler(() => api.get(`/plans/${userId}`).then((res) => res.data)),
+    apiHandler(() => api.get(`/plans/user/${userId}`).then((res) => res.data)),
 
   getPlanById: (planId: string) =>
     apiHandler(() => api.get(`/plans/${planId}`).then((res) => res.data)),
