@@ -22,7 +22,7 @@ router.get('/user/:clerkId', async (req, res) => {
 });
 
 // Update a user
-router.put('/users/:clerkId', async (req, res) => {
+router.put('/user/:clerkId', async (req, res) => {
   try {
     const { clerkId } = req.params;
     const updates = req.body;
