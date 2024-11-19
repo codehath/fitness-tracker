@@ -12,6 +12,14 @@ interface FormData {
   fitnessGoals: string;
 }
 
+interface Question {
+  title: string;
+  type: 'number' | 'text' | 'gender' | 'bodyType';
+  field: keyof FormData;
+  options?: string[];
+  placeholder?: string;
+}
+
 function OnboardingForm() {
   const { user } = useUser();
   const clerkId = user?.id;
@@ -27,8 +35,57 @@ function OnboardingForm() {
     fitnessGoals: '',
   });
 
+  const questions: Question[] = [
+    {
+      title: 'Age',
+      type: 'number',
+      field: 'age',
+      placeholder: 'Enter your age',
+    },
+    {
+      title: 'Weight (kg)',
+      type: 'number',
+      field: 'weight',
+      placeholder: 'Enter your weight in kg',
+    },
+    {
+      title: 'Height (cm)',
+      type: 'number',
+      field: 'height',
+      placeholder: 'Enter your height in cm',
+    },
+    {
+      title: 'Gender',
+      type: 'gender',
+      field: 'gender',
+      options: ['Male', 'Female'],
+    },
+    {
+      title: 'Body Type',
+      type: 'bodyType',
+      field: 'bodyType',
+      options:
+        formData.gender === 'Male'
+          ? [
+              'Slim',
+              'Skinny Fat',
+              'Average',
+              'Athletic',
+              'Muscular',
+              'Overweight',
+            ]
+          : ['Slim', 'Average', 'Toned', 'Curvy', 'Overweight'],
+    },
+    {
+      title: 'Fitness Goals',
+      type: 'text',
+      field: 'fitnessGoals',
+      placeholder: 'Enter your fitness goals',
+    },
+  ];
+
   const handleNext = () => {
-    if (step < 6) {
+    if (step < questions.length) {
       setStep(step + 1);
     } else {
       handleSubmit();
@@ -50,182 +107,99 @@ function OnboardingForm() {
         height: parseInt(formData.height),
       };
 
-      const response = await userService.updateUser(
-        clerkId!,
-        processedFormData
-      );
+      await userService.updateUser(clerkId!, processedFormData);
       navigate('/');
     } catch (error) {
       console.error('Error updating profile:', error);
     }
   };
 
-  const ProgressBar = () => (
-    <div>
-      <div style={{ width: `${(step / 6) * 100}%` }} />
-    </div>
-  );
-
-  const renderStep = () => {
-    switch (step) {
-      case 1:
-        return (
-          <div>
-            <h2>Question {step} of 6</h2>
-            <h3>What's your age?</h3>
-            <input
-              type="number"
-              value={formData.age}
-              onChange={(e) =>
-                setFormData({ ...formData, age: e.target.value })
-              }
-              required
-            />
-          </div>
-        );
-      case 2:
-        return (
-          <div>
-            <h2>Question {step} of 6</h2>
-            <h3>What's your weight (in kg)?</h3>
-            <input
-              type="number"
-              value={formData.weight}
-              onChange={(e) =>
-                setFormData({ ...formData, weight: e.target.value })
-              }
-              required
-            />
-          </div>
-        );
-      case 3:
-        return (
-          <div>
-            <h2>Question {step} of 6</h2>
-            <h3>What's your height (in cm)?</h3>
-            <input
-              type="number"
-              value={formData.height}
-              onChange={(e) =>
-                setFormData({ ...formData, height: e.target.value })
-              }
-              required
-            />
-          </div>
-        );
-      case 4:
-        return (
-          <div>
-            <h2>Question {step} of 6</h2>
-            <h3>What's your gender?</h3>
-            <div>
-              <button
-                onClick={() => setFormData({ ...formData, gender: 'Male' })}
-              >
-                Male
-              </button>
-              <button
-                onClick={() => setFormData({ ...formData, gender: 'Female' })}
-              >
-                Female
-              </button>
-            </div>
-          </div>
-        );
-      case 5:
-        return (
-          <div>
-            <h2>Question {step} of 6</h2>
-            <h3>What's your body type?</h3>
-            <div>
-              {formData.gender === 'Male' ? (
-                <>
-                  {[
-                    'Slim',
-                    'Skinny Fat',
-                    'Average',
-                    'Athletic',
-                    'Muscular',
-                    'Overweight',
-                  ].map((type) => (
-                    <button
-                      key={type}
-                      onClick={() =>
-                        setFormData({ ...formData, bodyType: type })
-                      }
-                    >
-                      {type}
-                    </button>
-                  ))}
-                </>
-              ) : (
-                <>
-                  {['Slim', 'Average', 'Toned', 'Curvy', 'Overweight'].map(
-                    (type) => (
-                      <button
-                        key={type}
-                        onClick={() =>
-                          setFormData({ ...formData, bodyType: type })
-                        }
-                      >
-                        {type}
-                      </button>
-                    )
-                  )}
-                </>
-              )}
-            </div>
-          </div>
-        );
-      case 6:
-        return (
-          <div>
-            <h2>Question {step} of 6</h2>
-            <h3>What are your fitness goals?</h3>
-            <input
-              type="text"
-              value={formData.fitnessGoals}
-              onChange={(e) =>
-                setFormData({ ...formData, fitnessGoals: e.target.value })
-              }
-              required
-            />
-          </div>
-        );
+  const handleInputChange = (field: keyof FormData, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    if (field === 'gender' || field === 'bodyType') {
+      handleNext();
     }
   };
 
-  const isNextDisabled = () => {
-    switch (step) {
-      case 1:
-        return !formData.age;
-      case 2:
-        return !formData.weight;
-      case 3:
-        return !formData.height;
-      case 4:
-        return !formData.gender;
-      case 5:
-        return !formData.bodyType;
-      case 6:
-        return !formData.fitnessGoals;
-      default:
-        return false;
-    }
+  const ProgressBar = () => (
+    <div
+      style={{
+        width: '100%',
+        backgroundColor: '#e0e0e0',
+        height: '10px',
+        borderRadius: '5px',
+      }}
+    >
+      <div
+        style={{
+          width: `${(step / questions.length) * 100}%`,
+          backgroundColor: '#8700a3',
+          height: '100%',
+          borderRadius: '5px',
+          transition: 'width 0.3s ease-in-out',
+        }}
+      />
+    </div>
+  );
+
+  const renderQuestion = (question: Question) => {
+    const { title, type, field, options, placeholder } = question;
+
+    return (
+      <div>
+        <h2>
+          {step} / {questions.length}
+        </h2>
+        <h3>{title}</h3>
+        {type === 'number' || type === 'text' ? (
+          <input
+            type={type}
+            value={formData[field]}
+            onChange={(e) => handleInputChange(field, e.target.value)}
+            placeholder={placeholder}
+            required
+          />
+        ) : type === 'gender' ? (
+          <div>
+            {options?.map((option) => (
+              <button
+                key={option}
+                onClick={() => handleInputChange(field, option)}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        ) : type === 'bodyType' ? (
+          <div>
+            {options?.map((type) => (
+              <button key={type} onClick={() => handleInputChange(field, type)}>
+                {type}
+              </button>
+            ))}
+          </div>
+        ) : null}
+      </div>
+    );
   };
 
   return (
     <div>
-      <h1>Tell us about yourself</h1>
       <ProgressBar />
-      {renderStep()}
+      {renderQuestion(questions[step - 1])}
       <div>
         <button onClick={handleBack} disabled={step === 1}>
           Back
         </button>
-        <button onClick={handleNext} disabled={isNextDisabled()}>
-          {step === 6 ? 'Finish' : 'Next'}
-        </button>
+        {(questions[step - 1].type === 'number' ||
+          questions[step - 1].type === 'text') && (
+          <button
+            onClick={handleNext}
+            disabled={!formData[questions[step - 1].field]}
+          >
+            {step === questions.length ? 'Finish' : 'Next'}
+          </button>
+        )}
       </div>
     </div>
   );
