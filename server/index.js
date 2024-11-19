@@ -7,6 +7,8 @@ const cors = require('cors');
 const workoutLogRoutes = require('./routes/workoutLogRoutes');
 const userRoutes = require('./routes/userRoutes');
 const workoutPlanRoutes = require('./routes/workoutPlanRoutes');
+const exerciseRoutes = require('./routes/exerciseRoutes');
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -16,6 +18,7 @@ app.use(express.json());
 app.use('/api/', workoutLogRoutes);
 app.use('/api/', userRoutes);
 app.use('/api/', workoutPlanRoutes);
+app.use('/api/', exerciseRoutes);
 
 // Connect to MongoDB
 mongoose
