@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import UserData from '../components/userData';
+import UserData from '../components/profile';
 import { useUser, useClerk } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
 

@@ -1,10 +1,6 @@
 import { Link } from 'react-router-dom';
-import { useUser } from '@clerk/clerk-react';
 
 function NavBar() {
-  const { user } = useUser();
-  const clerkId = user?.id;
-
   return (
     <nav className="bg-gray-800 p-4">
       <div className="container mx-auto flex justify-between items-center">

@@ -1,5 +1,5 @@
 import { useUser } from '@clerk/clerk-react';
-import UserDataEdit from '../components/userDataEdit';
+import UserDataEdit from '../components/profileForm';
 
 function EditAccountPage() {
   const { user } = useUser();
