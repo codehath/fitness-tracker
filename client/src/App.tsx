@@ -1,15 +1,25 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { SignedIn, SignedOut } from "@clerk/clerk-react";
-import Home from "./pages/Home";
+import { Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
 import SignInPage from "./pages/SignIn";
 import SignUpPage from "./pages/SignUp";
 import ProfilePage from "./pages/Profile";
 import WelcomePage from "./pages/Welcome";
 import OnboardingPage from "./pages/Onboarding";
+        
+import AllLogs from './pages/AllLogs';
+import Example from './pages/Example';
+import FullLog from './pages/FullLog';
+import NewLogPage from './pages/NewLogPage';
+import Account from './pages/Account';
+import NavBar from './components/NavBar';
+
 
 function App() {
   return (
     <div className="App">
+// Authentication Branch
       <Routes>
         {/* Public routes - redirect to home if signed in */}
         <Route
@@ -70,6 +80,16 @@ function App() {
             </>
           }
         />
+        
+// Core Branch
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/logs/:userId" element={<AllLogs />} />
+        <Route path="/logs/:userId/:logId" element={<FullLog />} />
+        <Route path="/logs/new" element={<NewLogPage />} />
+        <Route path="/example" element={<Example />} />
+        <Route path="/account/:userId" element={<Account />} />
       </Routes>
     </div>
   );

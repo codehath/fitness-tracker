@@ -3,11 +3,11 @@
 # Define variables
 DB_NAME="fitness-app"   # Replace with your MongoDB database name
 SEED_FILE="seed.js"      # Replace with your seed file path
-MONGO_URI="mongodb://localhost:27017"  # Replace with your MongoDB URI if different
+MONGODB_URL="mongodb://localhost:27017"  # Replace with your MongoDB URI if different
 
 # Step 1: Drop the database if it exists
 echo "Dropping database $DB_NAME if it exists..."
-mongosh $MONGO_URI --eval "db.getSiblingDB('$DB_NAME').dropDatabase()"
+mongosh $MONGODB_URL --eval "db.getSiblingDB('$DB_NAME').dropDatabase()"
 
 # Step 2: Create the database (MongoDB will auto-create it when data is inserted)
 echo "Database $DB_NAME created."

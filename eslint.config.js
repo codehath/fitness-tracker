@@ -3,18 +3,29 @@ import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
+import prettier from 'eslint-plugin-prettier'
 
 export default tseslint.config(
   { ignores: ['dist'] },
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    extends: [
+      js.configs.recommended,
+      ...tseslint.configs.recommended,
+      'plugin:prettier/recommended',
+    ],
+    plugins: {
+      prettier,
+    },
+    rules: {
+      'prettier/prettier': 'error',
+    },
     overrides: [
       {
-        // React frontend (client)
         files: ['client/**/*.{ts,tsx}', 'client/**/*.{js,jsx}'],
         languageOptions: {
           ecmaVersion: 2020,
-          globals: globals.browser, // Browser-specific globals for the frontend
+          sourceType: 'module', // Specify ES module for client
+          globals: globals.browser,
         },
         plugins: {
           'react-hooks': reactHooks,
@@ -29,15 +40,16 @@ export default tseslint.config(
         },
       },
       {
-        // Express backend (server)
         files: ['server/**/*.{ts,tsx}', 'server/**/*.{js,jsx}'],
-        environment: {
-          node: true, // Node.js globals for the backend
+        languageOptions: {
+          ecmaVersion: 2020,
+          sourceType: 'script', // Specify CommonJS for server
+          globals: globals.node,
         },
         rules: {
-          // Define backend-specific rules, if any
+          // Backend-specific rules here
         },
       },
     ],
-  },
+  }
 )
