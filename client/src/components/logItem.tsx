@@ -1,11 +1,13 @@
 // Example usage in a React component
-import { useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 import { workoutLogService } from '../services/workoutLogService';
 import { useApi } from '../hooks/useApi';
 import Loading from './common/Loading';
 import Error from './common/Error';
 import { WorkoutLog } from '../services/workoutLogService';
 import ExerciseName from './exerciseName';
+import WorkoutPlanName from './WorkoutPlanName';
+import WorkoutDayName from './WorkoutDayName';
 
 interface LogProps {
   userId: string;
@@ -18,16 +20,7 @@ const LogItem = ({ userId, logId }: LogProps) => {
     [userId, logId]
   );
 
-  const {
-    data: log,
-    loading,
-    error,
-    execute: fetchLog,
-  } = useApi<WorkoutLog>(getLog);
-
-  useEffect(() => {
-    fetchLog();
-  }, [fetchLog]);
+  const { data: log, loading, error } = useApi<WorkoutLog>(getLog);
 
   if (loading) return <Loading />;
   if (error) return <Error message={error} />;
@@ -52,11 +45,12 @@ const LogItem = ({ userId, logId }: LogProps) => {
             }}
           >
             <h3>
-              Workout_Name_Placeholder -{' '}
+              <WorkoutPlanName planId={log.workout.workoutPlanId} /> -{' '}
               {date.toLocaleDateString('en-US', { weekday: 'long' })}{' '}
               {date.toLocaleDateString()}
             </h3>
-            <p>Day_Name_Placeholder</p>
+            {/* <WorkoutDayName planId={log.planId} dayIndex={log.dayIndex} /> */}
+            <p>{log.workout.day}</p>
 
             <table style={{ width: '100%' }}>
               <thead>

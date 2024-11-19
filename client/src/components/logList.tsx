@@ -1,5 +1,5 @@
 // Example usage in a React component
-import { useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 import { workoutLogService } from '../services/workoutLogService';
 import LogItem from './logItem';
 import { useApi } from '../hooks/useApi';
@@ -17,16 +17,7 @@ const LogList = ({ userId }: UserProp) => {
     [userId]
   );
 
-  const {
-    data: logs,
-    loading,
-    error,
-    execute: fetchLogs,
-  } = useApi<WorkoutLog[]>(getLogs);
-
-  useEffect(() => {
-    fetchLogs();
-  }, [fetchLogs]);
+  const { data: logs, loading, error } = useApi<WorkoutLog[]>(getLogs);
 
   if (loading) return <Loading />;
   if (error) return <Error message={error} />;

@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 export const useApi = <T>(apiFunc: (...args: any[]) => Promise<T>) => {
   const [data, setData] = useState<T | null>(null);
@@ -24,6 +24,11 @@ export const useApi = <T>(apiFunc: (...args: any[]) => Promise<T>) => {
     },
     [apiFunc]
   );
+
+  // Automatically execute on mount
+  useEffect(() => {
+    execute();
+  }, [execute]);
 
   return { data, error, loading, execute };
 };
