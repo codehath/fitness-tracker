@@ -53,21 +53,18 @@ const UserDataEdit = ({ clerkId }: UserProp) => {
         {} as Record<string, string>
       );
 
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/users/${clerkId}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(changedFields),
-        }
-      );
+      const processedFormData = {
+        ...changedFields,
+        age: changedFields.age ? parseInt(changedFields.age) : undefined,
+        weight: changedFields.weight
+          ? parseInt(changedFields.weight)
+          : undefined,
+        height: changedFields.height
+          ? parseInt(changedFields.height)
+          : undefined,
+      };
 
-      if (!response.ok) {
-        throw new Error('Failed to update profile');
-      }
-
+      await userService.updateUser(clerkId, processedFormData);
       alert('Profile updated successfully!');
     } catch (error) {
       console.error('Error updating profile:', error);
