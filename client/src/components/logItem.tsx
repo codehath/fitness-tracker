@@ -10,14 +10,14 @@ import WorkoutPlanName from './WorkoutPlanName';
 import WorkoutDayName from './WorkoutDayName';
 
 interface LogProps {
-  userId: string;
+  clerkId: string;
   logId: string;
 }
 
-const LogItem = ({ userId, logId }: LogProps) => {
+const LogItem = ({ clerkId, logId }: LogProps) => {
   const getLog = useCallback(
-    () => workoutLogService.getLogById(userId, logId),
-    [userId, logId]
+    () => workoutLogService.getLogById(clerkId, logId),
+    [clerkId, logId]
   );
 
   const { data: log, loading, error } = useApi<WorkoutLog>(getLog);
@@ -32,7 +32,7 @@ const LogItem = ({ userId, logId }: LogProps) => {
     <div>
       <div className="single-log">
         <a
-          href={`/logs/${userId}/${logId}`}
+          href={`/logs/${clerkId}/${logId}`}
           style={{ textDecoration: 'none', color: 'inherit' }}
         >
           <div

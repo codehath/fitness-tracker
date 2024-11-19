@@ -1,14 +1,15 @@
-import { useParams } from "react-router-dom";
-import LogList from "../components/logList";
-
+import { useUser } from '@clerk/clerk-react';
+import LogList from '../components/logList';
+import Error from '../components/common/Error';
 function AllLogs() {
-  const { userId } = useParams();
-  const testUserId = "67387608e70d4a5c4f187b57";
-  const finalUserId = userId || testUserId;
+  const { user } = useUser();
+  const clerkId = user?.id;
+
+  if (!clerkId) return <Error message="User not found" />;
 
   return (
     <div>
-      <LogList userId={finalUserId} />
+      <LogList clerkId={clerkId} />
     </div>
   );
 }

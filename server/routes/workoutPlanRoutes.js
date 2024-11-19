@@ -15,13 +15,12 @@ router.get('/plans', async (req, res) => {
 });
 
 // Get workout plans created by user
-router.get('/plans/user/:userId', async (req, res) => {
+router.get('/plans/user/:clerkId', async (req, res) => {
   try {
-    const userId = new mongoose.Types.ObjectId(req.params.userId);
-    const plans = await WorkoutPlan.find({ userId });
+    const plans = await WorkoutPlan.find({ clerkUserId: req.params.clerkId });
     res.status(200).json(plans);
   } catch (error) {
-    console.error('Error in GET /plans/user/:userId:', error);
+    console.error('Error in GET /plans/user/:clerkId:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -93,7 +92,7 @@ router.put('/plans/:planId', async (req, res) => {
     const updatedPlan = await WorkoutPlan.findOneAndUpdate(
       {
         _id: new mongoose.Types.ObjectId(planId),
-        userId: new mongoose.Types.ObjectId(userId),
+        clerkUserId: new mongoose.Types.ObjectId(clerkId),
       },
       updates,
       { new: true }
@@ -111,13 +110,13 @@ router.put('/plans/:planId', async (req, res) => {
 });
 
 // Delete a workout plan
-router.delete('/plans/:userId/:planId', async (req, res) => {
+router.delete('/plans/:clerkId/:planId', async (req, res) => {
   try {
-    const { userId, planId } = req.params;
+    const { clerkId, planId } = req.params;
 
     const deletedPlan = await WorkoutPlan.findOneAndDelete({
       _id: new mongoose.Types.ObjectId(planId),
-      userId: new mongoose.Types.ObjectId(userId),
+      clerkUserId: new mongoose.Types.ObjectId(clerkId),
     });
 
     if (!deletedPlan) {
@@ -126,7 +125,7 @@ router.delete('/plans/:userId/:planId', async (req, res) => {
 
     res.status(200).json({ message: 'Workout plan deleted successfully' });
   } catch (error) {
-    console.error('Error in DELETE /plans/:userId/:planId:', error);
+    console.error('Error in DELETE /plans/:clerkId/:planId:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });

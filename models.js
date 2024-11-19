@@ -1,15 +1,15 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 // Body types based on gender
 const bodyTypeEnumMale = [
-  "Slim",
-  "Skinny Fat",
-  "Average",
-  "Athletic",
-  "Muscular",
-  "Overweight",
+  'Slim',
+  'Skinny Fat',
+  'Average',
+  'Athletic',
+  'Muscular',
+  'Overweight',
 ];
-const bodyTypeEnumFemale = ["Slim", "Average", "Toned", "Curvy", "Overweight"];
+const bodyTypeEnumFemale = ['Slim', 'Average', 'Toned', 'Curvy', 'Overweight'];
 
 // User Schema
 const userSchema = new mongoose.Schema({
@@ -20,21 +20,21 @@ const userSchema = new mongoose.Schema({
   age: { type: Number },
   weight: { type: Number },
   height: { type: Number },
-  gender: { type: String, enum: ["Male", "Female"] },
+  gender: { type: String, enum: ['Male', 'Female'] },
   bodyType: { type: String },
   fitnessGoals: { type: String },
   createdAt: { type: Date, default: Date.now },
 });
 
 // Pre-save hook to validate bodyType based on gender
-userSchema.pre("save", function (next) {
+userSchema.pre('save', function (next) {
   // Check if gender is male or female and validate bodyType accordingly
-  if (this.gender === "Male" && !bodyTypeEnumMale.includes(this.bodyType)) {
+  if (this.gender === 'Male' && !bodyTypeEnumMale.includes(this.bodyType)) {
     return next(
       new Error(`${this.bodyType} is not a valid body type for Male`)
     );
   }
-  if (this.gender === "Female" && !bodyTypeEnumFemale.includes(this.bodyType)) {
+  if (this.gender === 'Female' && !bodyTypeEnumFemale.includes(this.bodyType)) {
     return next(
       new Error(`${this.bodyType} is not a valid body type for Female`)
     );
@@ -45,7 +45,7 @@ userSchema.pre("save", function (next) {
 
 // Workout Plan Schema
 const workoutPlanSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  clerkUserId: { type: String, required: true },
   name: { type: String, required: true },
   days: [
     {
@@ -65,11 +65,11 @@ const workoutPlanSchema = new mongoose.Schema({
 
 // Workout Log Schema
 const workoutLogSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  clerkUserId: { type: String, required: true },
   workout: {
     workoutPlanId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "WorkoutPlan",
+      ref: 'WorkoutPlan',
       required: true,
     },
     day: { type: String, required: true },
@@ -86,9 +86,9 @@ const workoutLogSchema = new mongoose.Schema({
 });
 
 // Create Models
-const User = mongoose.model("User", userSchema);
-const WorkoutPlan = mongoose.model("WorkoutPlan", workoutPlanSchema);
-const WorkoutLog = mongoose.model("WorkoutLog", workoutLogSchema);
+const User = mongoose.model('User', userSchema);
+const WorkoutPlan = mongoose.model('WorkoutPlan', workoutPlanSchema);
+const WorkoutLog = mongoose.model('WorkoutLog', workoutLogSchema);
 
 // Export Models
 module.exports = {

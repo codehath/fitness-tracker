@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { User } = require('../../models');
-const mongoose = require('mongoose');
+const webhookRoutes = require('./webhookRoutes');
 
 router.use('/webhook', webhookRoutes);
 

@@ -3,7 +3,7 @@ import { apiHandler } from './apiHandler';
 
 export interface WorkoutLog {
   _id: string;
-  userId: string;
+  clerkUserId: string;
   workout: {
     workoutPlanId: string;
     day: string;
@@ -20,27 +20,29 @@ export interface WorkoutLog {
 }
 
 export const workoutLogService = {
-  getLogs: (userId: string) =>
-    apiHandler(() => api.get(`/logs/${userId}`).then((res) => res.data)),
+  getLogs: (clerkId: string) =>
+    apiHandler(() => api.get(`/logs/${clerkId}`).then((res) => res.data)),
 
-  getLogById: (userId: string, logId: string) =>
+  getLogById: (clerkId: string, logId: string) =>
     apiHandler(() =>
-      api.get(`/logs/${userId}/${logId}`).then((res) => res.data)
+      api.get(`/logs/${clerkId}/${logId}`).then((res) => res.data)
     ),
 
-  createLog: (userId: string, logData: any) =>
+  createLog: (clerkId: string, logData: any) =>
     apiHandler(() =>
-      api.post(`/logs/${userId}`, logData).then((res) => res.data)
+      api
+        .post(`/logs`, { ...logData, clerkUserId: clerkId })
+        .then((res) => res.data)
     ),
 
-  updateLog: (userId: string, id: string, logData: any) =>
+  updateLog: (clerkId: string, id: string, logData: any) =>
     apiHandler(() =>
-      api.put(`/logs/${userId}/${id}`, logData).then((res) => res.data)
+      api.put(`/logs/${clerkId}/${id}`, logData).then((res) => res.data)
     ),
 
-  deleteLog: (userId: string, id: string) =>
+  deleteLog: (clerkId: string, id: string) =>
     apiHandler(() =>
-      api.delete(`/logs/${userId}/${id}`).then((res) => res.data)
+      api.delete(`/logs/${clerkId}/${id}`).then((res) => res.data)
     ),
 
   searchLogs: (query: string) =>
