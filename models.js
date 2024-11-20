@@ -12,9 +12,26 @@ const bodyTypeEnumMale = [
 const bodyTypeEnumFemale = ['Slim', 'Average', 'Toned', 'Curvy', 'Overweight'];
 
 // User Schema
+const subscriptionSchema = new mongoose.Schema({
+  type: {
+    type: String,
+    enum: ['Basic', 'Premium'],
+    required: true,
+    default: 'Basic',
+  },
+  schedule: {
+    type: String,
+    enum: ['Monthly', 'Yearly'],
+    required: true,
+    default: 'Monthly',
+  },
+  startDate: { type: Date, default: null },
+  endDate: { type: Date, default: null },
+  isActive: { type: Boolean, default: true },
+});
+
 const userSchema = new mongoose.Schema({
   email: { type: String, unique: true, required: true },
-  password: { type: String, required: true },
   name: { type: String },
   clerkId: { type: String, unique: true },
   age: { type: Number },
@@ -24,6 +41,29 @@ const userSchema = new mongoose.Schema({
   bodyType: { type: String },
   fitnessGoals: { type: String },
   createdAt: { type: Date, default: Date.now },
+  onboardingComplete: { type: Boolean, default: false },
+  subscription: {
+    subscriptionSchema,
+    default: {
+      type: 'Basic',
+      schedule: 'Monthly',
+      startDate: null,
+      endDate: null,
+      isActive: false,
+    },
+  },
+  purchasedWorkoutPlans: [
+    { type: mongoose.Schema.Types.ObjectId, ref: 'WorkoutPlan' },
+  ],
+  paymentHistory: [
+    {
+      paymentId: { type: String, required: true },
+      amount: { type: Number, required: true },
+      date: { type: Date, default: Date.now },
+      itemType: { type: String, required: true },
+      itemId: { type: mongoose.Schema.Types.ObjectId, required: true },
+    },
+  ],
 });
 
 // Pre-save hook to validate bodyType based on gender
@@ -61,6 +101,7 @@ const workoutPlanSchema = new mongoose.Schema({
     },
   ],
   createdAt: { type: Date, default: Date.now },
+  price: { type: Number, default: 0 },
 });
 
 // Workout Log Schema

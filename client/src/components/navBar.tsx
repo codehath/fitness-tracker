@@ -9,7 +9,7 @@ function NavBar() {
             Home
           </Link>
           <Link to="/search" className="text-white hover:text-gray-300">
-            Search
+            Discover
           </Link>
           <Link to={`/logs`} className="text-white hover:text-gray-300">
             Workout History
