@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   onboardingComplete: { type: Boolean, default: false },
   subscription: {
-    subscriptionSchema,
+    type: subscriptionSchema,
     default: {
       type: 'Basic',
       schedule: 'Monthly',
