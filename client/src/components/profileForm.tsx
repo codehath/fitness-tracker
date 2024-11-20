@@ -72,14 +72,15 @@ const UserDataEdit = ({ clerkId }: UserProp) => {
     }
   };
 
-  const handleGenderChange = (gender: string) => {
+  const handleGenderBodyTypeChange = (gender: string) => {
     setFormData((prev) => ({
       ...prev,
       gender,
-      bodyType: '',
+      bodyType: '', // Reset bodyType when gender changes
     }));
   };
 
+  // Generic handler for all other form input changes
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -147,14 +148,14 @@ const UserDataEdit = ({ clerkId }: UserProp) => {
                 <div>
                   <button
                     type="button"
-                    onClick={() => handleGenderChange('Male')}
+                    onClick={() => handleGenderBodyTypeChange('Male')}
                     style={getButtonStyle(formData.gender === 'Male')}
                   >
                     Male
                   </button>
                   <button
                     type="button"
-                    onClick={() => handleGenderChange('Female')}
+                    onClick={() => handleGenderBodyTypeChange('Female')}
                     style={getButtonStyle(formData.gender === 'Female')}
                   >
                     Female
