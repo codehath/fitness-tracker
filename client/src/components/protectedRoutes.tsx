@@ -17,7 +17,7 @@ export default function ProtectedRoutes() {
           <Route path="/profile" element={<EditAccountPage />} />
           <Route path="/onboarding" element={<OnboardingPage />} />
           <Route path="/logs" element={<WorkoutHistoryPage />} />
-          <Route path="/logs/:logId" element={<WorkoutLogPage />} />
+          <Route path="/logs/:clerkId/:logId" element={<WorkoutLogPage />} />
           <Route path="/logs/new" element={<NewLogPage />} />
           <Route path="/account" element={<AccountPage />} />
         </Routes>
