@@ -12,6 +12,23 @@ export interface User {
   gender: 'Male' | 'Female';
   bodyType: string;
   fitnessGoals?: string;
+  createdAt: Date;
+  onboardingComplete: boolean;
+  subscription: {
+    type: 'Basic' | 'Premium';
+    schedule: 'Monthly' | 'Yearly';
+    startDate: Date | null;
+    endDate: Date | null;
+    isActive: boolean;
+  };
+  purchasedWorkoutPlans?: string[];
+  paymentHistory?: {
+    paymentId: string;
+    amount: number;
+    date: Date;
+    itemType: string;
+    itemId: string;
+  }[];
 }
 
 export const userService = {

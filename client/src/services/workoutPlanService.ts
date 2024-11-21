@@ -19,6 +19,7 @@ export interface WorkoutPlan {
   name: string;
   days: WorkoutDay[];
   createdAt: string;
+  price: number;
 }
 
 export const workoutPlanService = {

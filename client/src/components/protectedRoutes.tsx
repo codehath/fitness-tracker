@@ -7,6 +7,7 @@ import WorkoutHistoryPage from '../pages/WorkoutHistoryPage';
 import WorkoutLogPage from '../pages/WorkoutLogPage';
 import NewLogPage from '../pages/NewLogPage';
 import AccountPage from '../pages/AccountPage';
+import DiscoverPage from '../pages/DiscoverPage';
 
 export default function ProtectedRoutes() {
   return (
@@ -20,6 +21,7 @@ export default function ProtectedRoutes() {
           <Route path="/logs/:clerkId/:logId" element={<WorkoutLogPage />} />
           <Route path="/logs/new" element={<NewLogPage />} />
           <Route path="/account" element={<AccountPage />} />
+          <Route path="/search" element={<DiscoverPage />} />
         </Routes>
       </SignedIn>
       <SignedOut>

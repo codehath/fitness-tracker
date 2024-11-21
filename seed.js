@@ -70,7 +70,7 @@ const seedData = async () => {
       name: 'Roddy Rich',
       email: 'test-fitness-tracker-3@yopmail.com',
       clerkId: 'user_2p5HzIulxvDeenef826hNJZYdjY',
-      age: 30,
+      age: 0.75,
       weight: 85,
       height: 180,
       gender: 'Male',
@@ -115,10 +115,10 @@ const seedData = async () => {
         {
           dayName: 'Leg Day',
           exercises: [
-            { exerciseId: '0131', sets: 4, reps: 8, restTime: 120 }, // Squats
-            { exerciseId: '0132', sets: 3, reps: 12, restTime: 90 }, // Romanian Deadlifts
-            { exerciseId: '0133', sets: 3, reps: 15, restTime: 60 }, // Leg Extensions
-            { exerciseId: '0134', sets: 3, reps: 15, restTime: 60 }, // Calf Raises
+            { exerciseId: '3214', sets: 4, reps: 8, restTime: 120 }, // Arms apart circular toe touch
+            { exerciseId: '1709', sets: 3, reps: 12, restTime: 90 }, // Assisted lying glutes stretch
+            { exerciseId: '0016', sets: 3, reps: 15, restTime: 60 }, // Assisted prone hamstring
+            { exerciseId: '1713', sets: 3, reps: 15, restTime: 60 }, // Assisted prone lying quads stretch
           ],
         },
       ],
