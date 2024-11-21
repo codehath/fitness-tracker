@@ -101,7 +101,7 @@ const UserDataEdit = ({ clerkId }: UserProp) => {
 
   return (
     <div className="user-data-edit">
-      <h3>Edit Profile</h3>
+      <h2>Edit Profile</h2>
 
       <form onSubmit={handleSubmit}>
         <table>

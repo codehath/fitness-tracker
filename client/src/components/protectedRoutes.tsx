@@ -1,7 +1,7 @@
 import { SignedIn, SignedOut } from '@clerk/clerk-react';
 import { Navigate, Routes, Route } from 'react-router-dom';
 import HomePage from '../pages/HomePage';
-import EditAccountPage from '../pages/EditAccountPage';
+import EditProfilePage from '../pages/EditProfilePage';
 import OnboardingPage from '../pages/OnboardingPage';
 import WorkoutHistoryPage from '../pages/WorkoutHistoryPage';
 import WorkoutLogPage from '../pages/WorkoutLogPage';
@@ -15,7 +15,7 @@ export default function ProtectedRoutes() {
       <SignedIn>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/profile" element={<EditAccountPage />} />
+          <Route path="/profile" element={<EditProfilePage />} />
           <Route path="/onboarding" element={<OnboardingPage />} />
           <Route path="/logs" element={<WorkoutHistoryPage />} />
           <Route path="/logs/:clerkId/:logId" element={<WorkoutLogPage />} />

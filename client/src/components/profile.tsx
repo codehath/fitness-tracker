@@ -19,7 +19,7 @@ const UserData = ({ clerkId }: UserProp) => {
 
   return (
     <div className="user-data">
-      <h3>Profile</h3>
+      <h2>Profile</h2>
 
       <table>
         <tbody>

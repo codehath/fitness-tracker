@@ -1,7 +1,7 @@
 import { useUser } from '@clerk/clerk-react';
 import UserDataEdit from '../components/profileForm';
 
-function EditAccountPage() {
+function EditProfilePage() {
   const { user } = useUser();
   const clerkId = user?.id;
 
@@ -12,4 +12,4 @@ function EditAccountPage() {
   );
 }
 
-export default EditAccountPage;
+export default EditProfilePage;
