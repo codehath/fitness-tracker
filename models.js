@@ -42,16 +42,18 @@ const userSchema = new mongoose.Schema({
   fitnessGoals: { type: String },
   createdAt: { type: Date, default: Date.now },
   onboardingComplete: { type: Boolean, default: false },
-  subscription: {
-    type: subscriptionSchema,
-    default: {
-      type: 'Basic',
-      schedule: 'Monthly',
-      startDate: null,
-      endDate: null,
-      isActive: false,
+  subscriptions: [
+    {
+      type: subscriptionSchema,
+      default: {
+        type: 'Basic',
+        schedule: 'Monthly',
+        startDate: null,
+        endDate: null,
+        isActive: false,
+      },
     },
-  },
+  ],
   purchasedWorkoutPlans: [
     { type: mongoose.Schema.Types.ObjectId, ref: 'WorkoutPlan' },
   ],

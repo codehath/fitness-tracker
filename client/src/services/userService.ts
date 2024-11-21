@@ -14,13 +14,15 @@ export interface User {
   fitnessGoals?: string;
   createdAt: Date;
   onboardingComplete: boolean;
-  subscription: {
-    type: 'Basic' | 'Premium';
-    schedule: 'Monthly' | 'Yearly';
-    startDate: Date | null;
-    endDate: Date | null;
-    isActive: boolean;
-  };
+  subscriptions: [
+    {
+      type: 'Basic' | 'Premium';
+      schedule: 'Monthly' | 'Yearly';
+      startDate: Date | null;
+      endDate: Date | null;
+      isActive: boolean;
+    },
+  ];
   purchasedWorkoutPlans?: string[];
   paymentHistory?: {
     paymentId: string;

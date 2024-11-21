@@ -37,13 +37,15 @@ const seedData = async () => {
       bodyType: 'Athletic',
       fitnessGoals: 'Build muscle',
       onboardingComplete: true,
-      subscription: {
-        type: 'Premium',
-        schedule: 'Monthly',
-        startDate: new Date('2024-01-01'),
-        endDate: new Date('2025-01-01'),
-        isActive: true,
-      },
+      subscriptions: [
+        {
+          type: 'Premium',
+          schedule: 'Monthly',
+          startDate: new Date('2024-01-01'),
+          endDate: new Date('2025-01-01'),
+          isActive: true,
+        },
+      ],
     });
 
     const user2 = new User({
@@ -57,13 +59,15 @@ const seedData = async () => {
       bodyType: 'Toned',
       fitnessGoals: 'Lose weight',
       onboardingComplete: true,
-      subscription: {
-        type: 'Basic',
-        schedule: 'Monthly',
-        startDate: null,
-        endDate: null,
-        isActive: false,
-      },
+      subscriptions: [
+        {
+          type: 'Basic',
+          schedule: 'Monthly',
+          startDate: null,
+          endDate: null,
+          isActive: false,
+        },
+      ],
     });
 
     const user3 = new User({
@@ -77,13 +81,15 @@ const seedData = async () => {
       bodyType: 'Muscular',
       fitnessGoals: 'Maintain muscle mass',
       onboardingComplete: true,
-      subscription: {
-        type: 'Premium',
-        schedule: 'Monthly',
-        startDate: new Date('2024-01-15'),
-        endDate: new Date('2025-01-15'),
-        isActive: true,
-      },
+      subscriptions: [
+        {
+          type: 'Premium',
+          schedule: 'Monthly',
+          startDate: new Date('2024-01-15'),
+          endDate: new Date('2025-01-15'),
+          isActive: true,
+        },
+      ],
     });
 
     await Promise.all([user1.save(), user2.save(), user3.save()]);
