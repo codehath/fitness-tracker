@@ -15,27 +15,30 @@ export interface WorkoutDay {
 
 export interface WorkoutPlan {
   _id: string;
-  userId: string;
+  clerkUserId: string;
   name: string;
   days: WorkoutDay[];
   createdAt: string;
+  price: number;
 }
 
 export const workoutPlanService = {
   getPlans: () => apiHandler(() => api.get(`/plans`).then((res) => res.data)),
 
-  getUserPlans: (userId: string) =>
-    apiHandler(() => api.get(`/plans/user/${userId}`).then((res) => res.data)),
+  getUserPlans: (clerkId: string) =>
+    apiHandler(() => api.get(`/plans/user/${clerkId}`).then((res) => res.data)),
 
   getPlanById: (planId: string) =>
     apiHandler(() => api.get(`/plans/${planId}`).then((res) => res.data)),
 
   createPlan: (
-    userId: string,
-    planData: Omit<WorkoutPlan, '_id' | 'userId' | 'createdAt'>
+    clerkId: string,
+    planData: Omit<WorkoutPlan, '_id' | 'clerkUserId' | 'createdAt'>
   ) =>
     apiHandler(() =>
-      api.post(`/plans/${userId}`, planData).then((res) => res.data)
+      api
+        .post(`/plans`, { ...planData, clerkUserId: clerkId })
+        .then((res) => res.data)
     ),
 
   updatePlan: (planId: string, planData: Partial<WorkoutPlan>) =>
@@ -43,8 +46,8 @@ export const workoutPlanService = {
       api.put(`/plans/${planId}`, planData).then((res) => res.data)
     ),
 
-  deletePlan: (userId: string, planId: string) =>
+  deletePlan: (clerkId: string, planId: string) =>
     apiHandler(() =>
-      api.delete(`/plans/${userId}/${planId}`).then((res) => res.data)
+      api.delete(`/plans/${clerkId}/${planId}`).then((res) => res.data)
     ),
 };

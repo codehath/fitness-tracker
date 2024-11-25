@@ -8,13 +8,13 @@ import Error from './common/Error';
 import { WorkoutLog } from '../services/workoutLogService';
 
 interface UserProp {
-  userId: string;
+  clerkId: string;
 }
 
-const LogList = ({ userId }: UserProp) => {
+const LogList = ({ clerkId }: UserProp) => {
   const getLogs = useCallback(
-    () => workoutLogService.getLogs(userId),
-    [userId]
+    () => workoutLogService.getLogs(clerkId),
+    [clerkId]
   );
 
   const { data: logs, loading, error } = useApi<WorkoutLog[]>(getLogs);
@@ -28,7 +28,7 @@ const LogList = ({ userId }: UserProp) => {
       <h2>Your Workout History</h2>
       <div className="logs-list">
         {logs.map((log) => (
-          <LogItem key={log._id} userId={userId} logId={log._id} />
+          <LogItem key={log._id} clerkId={clerkId} logId={log._id} />
         ))}
       </div>
     </div>

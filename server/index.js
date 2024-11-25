@@ -3,11 +3,13 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const authRoutes = require('./routes/authRoutes');
+// const authRoutes = require('./routes/old/authRoutes');
 const workoutLogRoutes = require('./routes/workoutLogRoutes');
-const userRoutes = require('./routes/userRoutes');
+// const userRoutes = require('./routes/old/userRoutes');
 const workoutPlanRoutes = require('./routes/workoutPlanRoutes');
 const exerciseRoutes = require('./routes/exerciseRoutes');
+// const webhookRoutes = require('./routes/webhookRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,7 +17,8 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/v1/webhooks/clerk", authRoutes);
+// app.use("/api/webhooks", authRoutes);
+// app.use('/api/webhooks', webhookRoutes);
 app.use('/api/', workoutLogRoutes);
 app.use('/api/', userRoutes);
 app.use('/api/', workoutPlanRoutes);
@@ -32,8 +35,8 @@ mongoose
   });
 
 // Example route
-app.get("/api/message", (req, res) => {
-  res.json({ message: "Hello from the Express backend!" });
+app.get('/api/message', (req, res) => {
+  res.json({ message: 'Hello from the Express backend!' });
 });
 
 // Log all registered routes

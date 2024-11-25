@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
-import ProtectedRoutes from './components/ProtectedRoutes';
-import PublicRoute from './components/PublicRoutes';
-import NavBar from './components/NavBar';
+import ProtectedRoutes from './components/protectedRoutes';
+import PublicRoute from './components/publicRoutes';
+import NavBar from './components/navBar';
 
 function App() {
   return (

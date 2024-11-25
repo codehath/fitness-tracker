@@ -9,15 +9,12 @@ function NavBar() {
             Home
           </Link>
           <Link to="/search" className="text-white hover:text-gray-300">
-            Search
+            Discover
           </Link>
-          <Link to="/logs/:userId" className="text-white hover:text-gray-300">
+          <Link to={`/logs`} className="text-white hover:text-gray-300">
             Workout History
           </Link>
-          <Link
-            to="/account/:userId"
-            className="text-white hover:text-gray-300"
-          >
+          <Link to={`/account`} className="text-white hover:text-gray-300">
             Account
           </Link>
         </div>

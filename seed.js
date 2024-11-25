@@ -15,6 +15,8 @@ mongoose
     console.log('MongoDB connection error:', err);
   });
 
+const testUser = new User({});
+
 // Seed Data
 const seedData = async () => {
   try {
@@ -25,51 +27,112 @@ const seedData = async () => {
 
     // Create Users
     const user1 = new User({
-      email: 'john@example.com',
-      password: 'hashed_password', // You should hash the password in real-world use
       name: 'John Doe',
+      email: 'test-fitness-tracker@yopmail.com',
+      clerkId: 'user_2p5Bxpwm8zlcwplCf3tnqr6smka',
+      age: 28,
+      weight: 80,
+      height: 170,
       gender: 'Male',
       bodyType: 'Athletic',
       fitnessGoals: 'Build muscle',
-    });
-
-    const user2 = new User({
-      email: 'jane@example.com',
-      password: 'hashed_password',
-      name: 'Jane Smith',
-      gender: 'Female',
-      bodyType: 'Toned',
-      fitnessGoals: 'Lose weight',
-    });
-
-    await user1.save();
-    await user2.save();
-    console.log('Users created...');
-
-    // Create Workout Plans
-    const workoutPlan1 = new WorkoutPlan({
-      userId: user1._id,
-      name: 'Strength Training Plan',
-      days: [
+      onboardingComplete: true,
+      subscriptions: [
         {
-          dayName: 'Upper Day',
-          exercises: [
-            { exerciseId: '0123', sets: 3, reps: 10, restTime: 90 },
-            { exerciseId: '0456', sets: 4, reps: 8, restTime: 90 },
-          ],
-        },
-        {
-          dayName: 'Lower Day',
-          exercises: [
-            { exerciseId: '0789', sets: 3, reps: 10, restTime: 90 },
-            { exerciseId: '0234', sets: 4, reps: 8, restTime: 90 },
-          ],
+          type: 'Premium',
+          schedule: 'Monthly',
+          startDate: new Date('2024-01-01'),
+          endDate: new Date('2025-01-01'),
+          isActive: true,
         },
       ],
     });
 
+    const user2 = new User({
+      name: 'Jane Smith',
+      email: 'test-fitness-tracker-2@yopmail.com',
+      clerkId: 'user_2p5CqZR1lzYLP3OruPhTytjXDga',
+      age: 25,
+      weight: 65,
+      height: 165,
+      gender: 'Female',
+      bodyType: 'Toned',
+      fitnessGoals: 'Lose weight',
+      onboardingComplete: true,
+      subscriptions: [
+        {
+          type: 'Basic',
+          schedule: 'Monthly',
+          startDate: null,
+          endDate: null,
+          isActive: false,
+        },
+      ],
+    });
+
+    const user3 = new User({
+      name: 'Roddy Rich',
+      email: 'test-fitness-tracker-3@yopmail.com',
+      clerkId: 'user_2p5HzIulxvDeenef826hNJZYdjY',
+      age: 0.75,
+      weight: 85,
+      height: 180,
+      gender: 'Male',
+      bodyType: 'Muscular',
+      fitnessGoals: 'Maintain muscle mass',
+      onboardingComplete: true,
+      subscriptions: [
+        {
+          type: 'Premium',
+          schedule: 'Monthly',
+          startDate: new Date('2024-01-15'),
+          endDate: new Date('2025-01-15'),
+          isActive: true,
+        },
+      ],
+    });
+
+    await Promise.all([user1.save(), user2.save(), user3.save()]);
+    console.log('Users created...');
+
+    // Create Workout Plans
+    const workoutPlan1 = new WorkoutPlan({
+      clerkUserId: user1.clerkId,
+      name: 'Push Pull Legs',
+      days: [
+        {
+          dayName: 'Push Day',
+          exercises: [
+            { exerciseId: '0123', sets: 4, reps: 12, restTime: 90 }, // Bench Press
+            { exerciseId: '0124', sets: 3, reps: 12, restTime: 60 }, // Shoulder Press
+            { exerciseId: '0125', sets: 3, reps: 15, restTime: 60 }, // Tricep Extensions
+            { exerciseId: '0126', sets: 3, reps: 12, restTime: 60 }, // Lateral Raises
+          ],
+        },
+        {
+          dayName: 'Pull Day',
+          exercises: [
+            { exerciseId: '0127', sets: 4, reps: 10, restTime: 90 }, // Barbell Rows
+            { exerciseId: '0128', sets: 3, reps: 12, restTime: 60 }, // Lat Pulldowns
+            { exerciseId: '0129', sets: 3, reps: 15, restTime: 60 }, // Bicep Curls
+            { exerciseId: '0130', sets: 3, reps: 12, restTime: 60 }, // Face Pulls
+          ],
+        },
+        {
+          dayName: 'Leg Day',
+          exercises: [
+            { exerciseId: '3214', sets: 4, reps: 8, restTime: 120 }, // Arms apart circular toe touch
+            { exerciseId: '1709', sets: 3, reps: 12, restTime: 90 }, // Assisted lying glutes stretch
+            { exerciseId: '0016', sets: 3, reps: 15, restTime: 60 }, // Assisted prone hamstring
+            { exerciseId: '1713', sets: 3, reps: 15, restTime: 60 }, // Assisted prone lying quads stretch
+          ],
+        },
+      ],
+      price: 29.99,
+    });
+
     const workoutPlan2 = new WorkoutPlan({
-      userId: user2._id,
+      clerkUserId: user2.clerkId,
       name: 'Cardio Plan',
       days: [
         {
@@ -89,13 +152,42 @@ const seedData = async () => {
       ],
     });
 
-    await workoutPlan1.save();
-    await workoutPlan2.save();
+    const workoutPlan3 = new WorkoutPlan({
+      clerkUserId: user3.clerkId,
+      name: 'Full Body Split',
+      days: [
+        {
+          dayName: 'Day A',
+          exercises: [
+            { exerciseId: '0873', sets: 4, reps: 8, restTime: 120 }, // Deadlifts
+            { exerciseId: '0456', sets: 4, reps: 10, restTime: 90 }, // Incline Bench
+            { exerciseId: '0245', sets: 3, reps: 12, restTime: 60 }, // Pull-ups
+            { exerciseId: '0016', sets: 3, reps: 15, restTime: 45 }, // Leg Press
+          ],
+        },
+        {
+          dayName: 'Day B',
+          exercises: [
+            { exerciseId: '0345', sets: 4, reps: 8, restTime: 120 }, // Front Squats
+            { exerciseId: '1289', sets: 4, reps: 10, restTime: 90 }, // OHP
+            { exerciseId: '1713', sets: 3, reps: 12, restTime: 60 }, // Barbell Rows
+            { exerciseId: '0391', sets: 3, reps: 15, restTime: 45 }, // Lunges
+          ],
+        },
+      ],
+      price: 19.99,
+    });
+
+    await Promise.all([
+      workoutPlan1.save(),
+      workoutPlan2.save(),
+      workoutPlan3.save(),
+    ]);
     console.log('Workout plans created...');
 
     // Create Workout Logs
     const workoutLog1 = new WorkoutLog({
-      userId: user1._id,
+      clerkUserId: user1.clerkId,
       workout: {
         workoutPlanId: workoutPlan1._id,
         day: 'Upper Day',
@@ -118,7 +210,7 @@ const seedData = async () => {
     });
 
     const workoutLog2 = new WorkoutLog({
-      userId: user2._id,
+      clerkUserId: user2.clerkId,
       workout: {
         workoutPlanId: workoutPlan2._id,
         day: 'Day 1',
@@ -141,7 +233,7 @@ const seedData = async () => {
     });
 
     const workoutLog3 = new WorkoutLog({
-      userId: user1._id,
+      clerkUserId: user1.clerkId,
       workout: {
         workoutPlanId: workoutPlan1._id,
         day: 'Lower Day',
@@ -149,7 +241,7 @@ const seedData = async () => {
       date: new Date('2024-01-17'),
       completedExercises: [
         {
-          exerciseId: '0789',
+          exerciseId: '0666',
           setsCompleted: 3,
           repsCompleted: 10,
           weightUsed: 45,
@@ -164,7 +256,7 @@ const seedData = async () => {
     });
 
     const workoutLog4 = new WorkoutLog({
-      userId: user2._id,
+      clerkUserId: user2.clerkId,
       workout: {
         workoutPlanId: workoutPlan2._id,
         day: 'Day 2',
@@ -187,7 +279,7 @@ const seedData = async () => {
     });
 
     const workoutLog5 = new WorkoutLog({
-      userId: user1._id,
+      clerkUserId: user1.clerkId,
       workout: {
         workoutPlanId: workoutPlan1._id,
         day: 'Upper Day',
@@ -209,11 +301,86 @@ const seedData = async () => {
       ],
     });
 
-    await workoutLog1.save();
-    await workoutLog2.save();
-    await workoutLog3.save();
-    await workoutLog4.save();
-    await workoutLog5.save();
+    const workoutLog6 = new WorkoutLog({
+      clerkUserId: user3.clerkId,
+      workout: {
+        workoutPlanId: workoutPlan3._id,
+        day: 'Day A',
+      },
+      date: new Date('2024-01-20'),
+      completedExercises: [
+        {
+          exerciseId: '0873',
+          setsCompleted: 4,
+          repsCompleted: 8,
+          weightUsed: 140,
+        },
+        {
+          exerciseId: '0456',
+          setsCompleted: 4,
+          repsCompleted: 10,
+          weightUsed: 85,
+        },
+        {
+          exerciseId: '0245',
+          setsCompleted: 3,
+          repsCompleted: 12,
+          weightUsed: 0,
+        },
+        {
+          exerciseId: '0016',
+          setsCompleted: 3,
+          repsCompleted: 15,
+          weightUsed: 200,
+        },
+      ],
+    });
+
+    const workoutLog7 = new WorkoutLog({
+      clerkUserId: user3.clerkId,
+      workout: {
+        workoutPlanId: workoutPlan3._id,
+        day: 'Day B',
+      },
+      date: new Date('2024-01-22'),
+      completedExercises: [
+        {
+          exerciseId: '0345',
+          setsCompleted: 4,
+          repsCompleted: 8,
+          weightUsed: 100,
+        },
+        {
+          exerciseId: '1289',
+          setsCompleted: 4,
+          repsCompleted: 10,
+          weightUsed: 60,
+        },
+        {
+          exerciseId: '1713',
+          setsCompleted: 3,
+          repsCompleted: 12,
+          weightUsed: 80,
+        },
+        {
+          exerciseId: '0391',
+          setsCompleted: 3,
+          repsCompleted: 15,
+          weightUsed: 40,
+        },
+      ],
+    });
+
+    // Save all workout logs
+    await Promise.all([
+      workoutLog1.save(),
+      workoutLog2.save(),
+      workoutLog3.save(),
+      workoutLog4.save(),
+      workoutLog5.save(),
+      workoutLog6.save(),
+      workoutLog7.save(),
+    ]);
     console.log('Workout logs created...');
 
     // Close MongoDB connection
