@@ -57,6 +57,32 @@ const UserData = ({ clerkId }: UserProp) => {
           </tr>
         </tbody>
       </table>
+
+      {/* New section for purchased workout plans */}
+      <h3>Purchased Workout Plans</h3>
+      <ul>
+        {user.purchasedWorkoutPlans && user.purchasedWorkoutPlans.length > 0 ? (
+          user.purchasedWorkoutPlans.map((plan, index) => (
+            <li key={index}>{plan}</li>
+          ))
+        ) : (
+          <li>No purchased workout plans found</li>
+        )}
+      </ul>
+
+      {/* New section for payment history */}
+      <h3>Payment History</h3>
+      <ul>
+        {user.paymentHistory && user.paymentHistory.length > 0 ? (
+          user.paymentHistory.map((payment, index) => (
+            <li key={index}>
+              {new Date(payment.date).toLocaleDateString()} - {payment.amount}
+            </li>
+          ))
+        ) : (
+          <li>No payment history found</li>
+        )}
+      </ul>
     </div>
   );
 };
