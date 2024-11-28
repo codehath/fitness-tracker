@@ -1,5 +1,6 @@
 import { WorkoutPlan } from '../services/workoutPlanService';
 import ExerciseName from './exerciseName';
+import PurchaseWorkoutPlan from './PurchaseWorkoutPlan';
 
 interface WorkoutItemProps {
   plan: WorkoutPlan;
@@ -45,11 +46,7 @@ const WorkoutItem = ({ plan }: WorkoutItemProps) => {
             </table>
           </div>
         ))}
-        {plan.price > 0 && (
-          <p style={{ textAlign: 'right', fontWeight: 'bold' }}>
-            Price: ${plan.price}
-          </p>
-        )}
+        {plan.price > 0 && <PurchaseWorkoutPlan plan={plan} />}
       </div>
     </div>
   );
