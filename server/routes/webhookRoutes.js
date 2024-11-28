@@ -54,4 +54,45 @@ router.post('/clerk/delete', async (req, res) => {
   }
 });
 
+// Webhook to handle successful payment
+router.post(
+  '/stripe',
+  express.raw({ type: 'application/json' }),
+  async (req, res) => {
+    const event = req.body;
+    console.log('Received event:', event); // Log the entire event
+
+    if (event.type === 'checkout.session.completed') {
+      const session = event.data.object;
+      console.log('Session data:', session); // Log session data
+
+      // Update user in MongoDB
+      const userId = session.metadata.userId;
+      const planId = session.metadata.planId;
+
+      try {
+        const user = await User.findOne({ clerkId: userId });
+        if (user) {
+          user.purchasedWorkoutPlans.push(planId);
+          user.paymentHistory.push({
+            paymentId: session.id,
+            amount: session.amount_total,
+            date: new Date(),
+            itemType: 'Workout Plan',
+            itemId: planId,
+          });
+          await user.save();
+          console.log('User updated successfully:', user); // Log success
+        } else {
+          console.error('User not found:', userId); // Log if user is not found
+        }
+      } catch (error) {
+        console.error('Error updating user:', error);
+      }
+    }
+
+    res.json({ received: true });
+  }
+);
+
 module.exports = router;
