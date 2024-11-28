@@ -10,6 +10,7 @@ const workoutPlanRoutes = require('./routes/workoutPlanRoutes');
 const exerciseRoutes = require('./routes/exerciseRoutes');
 // const webhookRoutes = require('./routes/webhookRoutes');
 const userRoutes = require('./routes/userRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -23,6 +24,7 @@ app.use('/api/', workoutLogRoutes);
 app.use('/api/', userRoutes);
 app.use('/api/', workoutPlanRoutes);
 app.use('/api/', exerciseRoutes);
+app.use('/api', paymentRoutes);
 
 // Connect to MongoDB
 mongoose
