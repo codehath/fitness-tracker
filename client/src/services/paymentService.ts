@@ -26,4 +26,9 @@ export const paymentService = {
       throw new Error(error.message);
     }
   },
+  getCheckoutSession: async (sessionId: string) => {
+    // Fetch the session details from the server
+    const response = await api.get(`/checkout-session/${sessionId}`);
+    return response.data; // Return the session data
+  },
 };
