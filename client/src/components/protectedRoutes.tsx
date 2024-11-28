@@ -8,6 +8,8 @@ import WorkoutLogPage from '../pages/WorkoutLogPage';
 import NewLogPage from '../pages/NewLogPage';
 import AccountPage from '../pages/AccountPage';
 import DiscoverPage from '../pages/DiscoverPage';
+import SuccessPage from '../pages/Success';
+import CancelPage from '../pages/Cancel';
 
 export default function ProtectedRoutes() {
   return (
@@ -22,6 +24,8 @@ export default function ProtectedRoutes() {
           <Route path="/logs/new" element={<NewLogPage />} />
           <Route path="/account" element={<AccountPage />} />
           <Route path="/search" element={<DiscoverPage />} />
+          <Route path="/success" element={<SuccessPage />} />
+          <Route path="/cancel" element={<CancelPage />} />
         </Routes>
       </SignedIn>
       <SignedOut>
