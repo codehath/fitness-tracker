@@ -31,13 +31,14 @@ cd client
 cp .env.example .env
 ```
 
-### 3. Set Up external services and get API keys
+### 3. Set Up External Services and Get API Keys
 
-Set up Clerk, ngrok, your webhooks in Clerk and RapidAPI:  
-[Clerk Setup](/docs/setup-clerk.md)  
-[Ngrok Setup](/docs/setup-ngrok.md)  
-[Clerk Webhooks Setup (Step 5)](/docs/setup-clerk.md)  
+Set up Clerk, ngrok, your webhooks in Clerk and RapidAPI:
+[Clerk Setup](/docs/setup-clerk.md)
+[Ngrok Setup](/docs/setup-ngrok.md)
+[Clerk Webhooks Setup (Step 5)](/docs/setup-clerk.md)
 [RapidAPI Setup](/docs/setup-rapidapi.md)
+[Stripe Setup](/docs/setup-stripe.md)
 
 Then return to the root directory:
 
