@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { paymentService } from '../services/paymentService';
 import { WorkoutPlan } from '../services/workoutPlanService';
 import { useUser } from '@clerk/clerk-react';
+import { userService } from '../services/userService'; // Import userService
 
 interface PurchaseWorkoutPlanProps {
   plan: WorkoutPlan;
@@ -9,6 +10,20 @@ interface PurchaseWorkoutPlanProps {
 
 const PurchaseWorkoutPlan: React.FC<PurchaseWorkoutPlanProps> = ({ plan }) => {
   const { user } = useUser();
+  const [hasPurchased, setHasPurchased] = useState<boolean>(false);
+
+  useEffect(() => {
+    const checkPurchaseStatus = async () => {
+      if (user) {
+        const userData = await userService.getUser(user.id);
+        setHasPurchased(
+          userData.purchasedWorkoutPlans?.includes(plan._id) || false
+        );
+      }
+    };
+
+    checkPurchaseStatus();
+  }, [user, plan._id]);
 
   const handlePurchase = async () => {
     if (!user) {
@@ -29,11 +44,13 @@ const PurchaseWorkoutPlan: React.FC<PurchaseWorkoutPlanProps> = ({ plan }) => {
 
   return (
     <div>
-      <h3>{plan.name}</h3>
-      <p>Price: £{plan.price}</p>
-      <button onClick={handlePurchase} className="btn btn-primary">
-        Purchase Plan
-      </button>
+      {hasPurchased ? (
+        <p>Plan Purchased.</p>
+      ) : (
+        <button onClick={handlePurchase} className="btn btn-primary">
+          Purchase Plan
+        </button>
+      )}
     </div>
   );
 };

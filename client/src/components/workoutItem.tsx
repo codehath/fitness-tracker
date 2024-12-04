@@ -46,6 +46,7 @@ const WorkoutItem = ({ plan }: WorkoutItemProps) => {
             </table>
           </div>
         ))}
+        <h5>Price: £{plan.price}</h5>
         {plan.price > 0 && <PurchaseWorkoutPlan plan={plan} />}
       </div>
     </div>
