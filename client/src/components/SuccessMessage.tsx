@@ -2,7 +2,7 @@ import React from 'react';
 import PaymentDetails from './PaymentDetails';
 
 interface SuccessMessageProps {
-  paymentInfo: any; // Replace 'any' with the appropriate type
+  paymentInfo: any;
 }
 
 const SuccessMessage: React.FC<SuccessMessageProps> = ({ paymentInfo }) => {
