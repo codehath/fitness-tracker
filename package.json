@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "build": "cd client && pnpm install && pnpm build",
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "cd server && node index.js",
     "client": "cd client && npm run dev",

@@ -61,3 +61,6 @@ app._router.stack.forEach((middleware) => {
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+// Export the Express API for Vercel serverless deployment
+module.exports = app;
